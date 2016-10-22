@@ -1,0 +1,31 @@
+
+* Instalacja bazy PostgreSQL na Linuxie (Ubuntu 16.04):
+sudo apt-get update
+sudo apt-get install postgresql postgresql-contrib
+
+* Logowanie na domyślne konto postgres:
+sudo -i -u postgres
+
+* Dostęp do linii poleceń:
+psql
+
+* Tworzenie użytkownika:
+createuser -P -s -e admin
+// password: admin
+sudo adduser admin
+
+* Tworzenie bazy:
+createdb northrest
+
+* Tworzenie schema:
+create schema northrest
+
+* Nadawanie uprawnień:
+grant all on schema northrest to admin
+GRANT ALL ON ALL TABLES IN SCHEMA northrest TO admin
+
+* Wyświetlanie wszystkich tabel w bazie:
+select * from information_schema.tables
+lub
+select * from information_schema.tables
+where table_schema = 'information_schema'
