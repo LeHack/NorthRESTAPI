@@ -4,4 +4,4 @@
 
 Autorzy: Łukasz Hejnak (@LeHack), Piotr Skurski (@skurski)
 
-Dokumentacja: https://github.com/LeHack/NorthRESTAPI/wiki
+Dokumentacja: http://github.com/LeHack/NorthRESTAPI/wiki
