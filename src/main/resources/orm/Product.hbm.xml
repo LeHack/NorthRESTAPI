@@ -1,0 +1,35 @@
+<hibernate-mapping package="northwind.rest.app.model">
+    <class name="Product" table="products">
+        <id name="id" type="java.lang.Integer">
+            <column name="productid"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one name="supplier" class="Supplier" fetch="select">
+            <column name="supplierid" not-null="true" />
+        </many-to-one>
+        <many-to-one name="category" class="Category" fetch="select">
+            <column name="categoryId" not-null="true"/>
+        </many-to-one>
+        <property name="name" type="java.lang.String">
+            <column name="productname" length="40" not-null="true"/>
+        </property>
+        <property name="quantityPerUnit" type="java.lang.String">
+            <column name="quantityperunit" length="20"/>
+        </property>
+        <property name="unitPrice" type="java.lang.Float">
+            <column name="unitprice"/>
+        </property>
+        <property name="unitsInStock" type="java.lang.Integer">
+            <column name="unitsinstock"/>
+        </property>
+        <property name="unitsOnOrder" type="java.lang.Integer">
+            <column name="unitsonorder"/>
+        </property>
+        <property name="reorderLevel" type="java.lang.Integer">
+            <column name="reorderlevel"/>
+        </property>
+        <property name="discontinued" type="java.lang.Boolean">
+            <column name="discontinued" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

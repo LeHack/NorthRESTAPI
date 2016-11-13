@@ -1,30 +1,28 @@
 package northwind.rest.app.model;
 
-import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity
-@Table (name="categories")
+/**
+ * Class for mapping categories table.
+ */
 public class Category {
 
-    @Id
-    @Column (name="categoryid")
-    @GeneratedValue (strategy=GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    @Column (name="categoryname")
     private String name;
 
-    @Column
     private String description;
 
-    @Column
     private String picture;
 
-    public int getId() {
+    private Set<Product> products = new HashSet<>(0);
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -50,5 +48,13 @@ public class Category {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
 }

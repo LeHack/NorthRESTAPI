@@ -1,0 +1,51 @@
+<hibernate-mapping package="northwind.rest.app.model">
+    <class name="Supplier" table="suppliers">
+        <meta attribute="class-description">
+            This class contains suppliers details.
+        </meta>
+        <id name="id" type="java.lang.Integer">
+            <column name="supplierid"/>
+            <generator class="identity"/>
+        </id>
+        <property name="companyName" type="java.lang.String">
+            <column name="companyname" length="40" not-null="true"/>
+        </property>
+        <property name="contactName" type="java.lang.String">
+            <column name="contactname" length="30"/>
+        </property>
+        <property name="contactTitle" type="java.lang.String">
+            <column name="contacttitle" length="30"/>
+        </property>
+        <property name="address" type="java.lang.String">
+            <column name="address" length="60"/>
+        </property>
+        <property name="city" type="java.lang.String">
+            <column name="city" length="15"/>
+        </property>
+        <property name="region" type="java.lang.String">
+            <column name="region" length="15"/>
+        </property>
+        <property name="postalCode" type="java.lang.String">
+            <column name="postalcode" length="10"/>
+        </property>
+        <property name="country" type="java.lang.String">
+            <column name="country" length="15"/>
+        </property>
+        <property name="phone" type="java.lang.String">
+            <column name="phone" length="24"/>
+        </property>
+        <property name="fax" type="java.lang.String">
+            <column name="fax" length="24"/>
+        </property>
+        <property name="homepage" type="java.lang.String">
+            <column name="homepage"/>
+        </property>
+        <set name="products" table="products"
+             inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="supplierid" not-null="true" />
+            </key>
+            <one-to-many class="Product" />
+        </set>
+    </class>
+</hibernate-mapping>

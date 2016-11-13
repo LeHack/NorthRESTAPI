@@ -1,0 +1,27 @@
+<hibernate-mapping package="northwind.rest.app.model">
+    <class name="Category" table="categories">
+        <meta attribute="class-description">
+                This class contains categories details.
+        </meta>
+        <id name="id" type="java.lang.Integer">
+            <column name="categoryid"/>
+            <generator class="identity"/>
+        </id>
+        <property name="name" type="string">
+            <column name="categoryname" length="15" not-null="true"/>
+        </property>
+        <property name="description" type="string">
+            <column name="description"/>
+        </property>
+        <property name="picture" type="string">
+            <column name="picture"/>
+        </property>
+        <set name="products" table="products"
+             inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="categoryid" not-null="true" />
+            </key>
+            <one-to-many class="Product" />
+        </set>
+    </class>
+</hibernate-mapping>
