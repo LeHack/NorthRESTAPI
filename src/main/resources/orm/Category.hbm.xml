@@ -16,12 +16,12 @@
         <property name="picture" type="string">
             <column name="picture"/>
         </property>
-        <set name="products" table="products"
-             inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="categoryid" not-null="true" />
-            </key>
-            <one-to-many class="Product" />
-        </set>
+        <!--<set name="products" table="products"-->
+             <!--inverse="true" lazy="true" fetch="select">-->
+            <!--<key>-->
+                <!--<column name="categoryid" not-null="true" />-->
+            <!--</key>-->
+            <!--<one-to-many class="Product" />-->
+        <!--</set>-->
     </class>
 </hibernate-mapping>

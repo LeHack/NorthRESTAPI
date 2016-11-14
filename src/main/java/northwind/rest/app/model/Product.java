@@ -1,9 +1,11 @@
 package northwind.rest.app.model;
 
+import java.io.Serializable;
+
 /**
  * Class for mapping products table.
  */
-public class Product {
+public class Product implements Serializable {
 
     private Integer id;
 

@@ -1,12 +1,13 @@
 package northwind.rest.app.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * Class for mapping categories table.
  */
-public class Category {
+public class Category implements Serializable {
 
     private Integer id;
 
@@ -16,7 +17,7 @@ public class Category {
 
     private String picture;
 
-    private Set<Product> products = new HashSet<>(0);
+//    private Set<Product> products = new HashSet<>(0);
 
     public Integer getId() {
         return id;
@@ -48,13 +49,5 @@ public class Category {
 
     public void setPicture(String picture) {
         this.picture = picture;
-    }
-
-    public Set<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Set<Product> products) {
-        this.products = products;
     }
 }

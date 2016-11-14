@@ -1,12 +1,13 @@
 package northwind.rest.app.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * Class for mapping suppliers table.
  */
-public class Supplier {
+public class Supplier implements Serializable {
 
     private Integer id;
 
@@ -32,7 +33,7 @@ public class Supplier {
 
     private String homepage;
 
-    private Set<Product> products = new HashSet<>(0);
+//    private Set<Product> products = new HashSet<>(0);
 
     public Integer getId() {
         return id;
@@ -128,13 +129,5 @@ public class Supplier {
 
     public void setHomepage(String homepage) {
         this.homepage = homepage;
-    }
-
-    public Set<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Set<Product> products) {
-        this.products = products;
     }
 }
