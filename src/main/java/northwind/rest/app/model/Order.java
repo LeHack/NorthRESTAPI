@@ -9,10 +9,12 @@ import java.util.Date;
 public class Order implements Serializable {
 
     private int id;
-    private Integer employeeId, shipVia;
+    private Customer customer;
+    private Employee employee;
+    private Shipper shipVia;
     private Date orderDate, requiredDate, shippedDate;
     private Double freight;
-    private String customerId, shipName, shipAddress, shipCity, shipRegion, shipPostalCode, shipCountry;
+    private String shipName, shipAddress, shipCity, shipRegion, shipPostalCode, shipCountry;
 
     public int getId() {
         return id;
@@ -22,27 +24,27 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    public String getCustomerId() {
-        return customerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    public Integer getEmployeeId() {
-        return employeeId;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeId(Integer employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
-    public Integer getShipVia() {
+    public Shipper getShipVia() {
         return shipVia;
     }
 
-    public void setShipVia(Integer shipVia) {
+    public void setShipVia(Shipper shipVia) {
         this.shipVia = shipVia;
     }
 

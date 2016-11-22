@@ -1,6 +1,7 @@
 package northwind.rest.app.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -15,6 +16,7 @@ public class Employee implements Serializable {
         homePhone, extension, notes, photoPath;
     private Date birthDate, hireDate;
     private byte[] photo;
+    private Collection<Order> orders;
 
     public int getId() {
         return id;
@@ -158,5 +160,13 @@ public class Employee implements Serializable {
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+
+    public Collection<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Collection<Order> orders) {
+        this.orders = orders;
     }
 }

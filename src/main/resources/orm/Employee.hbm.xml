@@ -58,5 +58,11 @@
         <property name="photoPath" type="string">
             <column name="photopath" length="255"/>
         </property>
+        <set name="orders" table="orders" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="employeeid" not-null="true" />
+            </key>
+            <one-to-many class="Order" />
+        </set>
     </class>
 </hibernate-mapping>

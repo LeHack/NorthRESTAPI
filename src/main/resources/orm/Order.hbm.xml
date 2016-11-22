@@ -7,12 +7,12 @@
             <column name="orderid"/>
             <generator class="identity"/>
         </id>
-        <property name="customerId" type="string">
-            <column name="customerid"/>
-        </property>
-        <property name="employeeId" type="integer">
-            <column name="employeeid"/>
-        </property>
+        <many-to-one name="customer" class="Customer" fetch="select" lazy="false">
+            <column name="customerId" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="employee" class="Employee" fetch="select" lazy="false">
+            <column name="employeeId" not-null="true"/>
+        </many-to-one>
         <property name="orderDate" type="date">
             <column name="orderdate"/>
         </property>
@@ -22,9 +22,9 @@
         <property name="shippedDate" type="date">
             <column name="shippeddate"/>
         </property>
-        <property name="shipVia" type="integer">
-            <column name="shipvia"/>
-        </property>
+        <many-to-one name="shipVia" class="Shipper" fetch="select" lazy="false">
+            <column name="shipvia" not-null="true"/>
+        </many-to-one>
         <property name="freight" type="double">
             <column name="freight"/>
         </property>

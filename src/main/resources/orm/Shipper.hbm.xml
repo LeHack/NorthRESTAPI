@@ -13,5 +13,11 @@
         <property name="phone" type="string">
             <column name="phone" length="24"/>
         </property>
+        <set name="orders" table="orders" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="shipvia" not-null="true" />
+            </key>
+            <one-to-many class="Order" />
+        </set>
     </class>
 </hibernate-mapping>

@@ -40,12 +40,11 @@
         <property name="homepage" type="java.lang.String">
             <column name="homepage"/>
         </property>
-        <!--<set name="products" table="products"-->
-             <!--inverse="true" lazy="true" fetch="select">-->
-            <!--<key>-->
-                <!--<column name="supplierid" not-null="true" />-->
-            <!--</key>-->
-            <!--<one-to-many class="Product" />-->
-        <!--</set>-->
+        <set name="products" table="products" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="supplierid" not-null="true" />
+            </key>
+            <one-to-many class="Product" />
+        </set>
     </class>
 </hibernate-mapping>

@@ -1,6 +1,7 @@
 package northwind.rest.app.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * Class for mapping customers table.
@@ -8,6 +9,7 @@ import java.io.Serializable;
 public class Customer implements Serializable {
 
     private String id, companyName, contactName, contactTitle, address, city, region, postalCode, country, phone, fax;
+    private Collection<Order> orders;
 
     public String getId() {
         return id;
@@ -95,5 +97,13 @@ public class Customer implements Serializable {
 
     public void setFax(String fax) {
         this.fax = fax;
+    }
+
+    public Collection<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Collection<Order> orders) {
+        this.orders = orders;
     }
 }

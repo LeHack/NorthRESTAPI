@@ -1,6 +1,7 @@
 package northwind.rest.app.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,14 +11,8 @@ import java.util.Set;
 public class Category implements Serializable {
 
     private Integer id;
-
-    private String name;
-
-    private String description;
-
-    private String picture;
-
-//    private Set<Product> products = new HashSet<>(0);
+    private String name, description, picture;
+    private Collection<Product> products;
 
     public Integer getId() {
         return id;
@@ -49,5 +44,13 @@ public class Category implements Serializable {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public Collection<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Collection<Product> products) {
+        this.products = products;
     }
 }

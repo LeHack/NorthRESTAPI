@@ -37,5 +37,11 @@
         <property name="fax" type="string">
             <column name="fax" length="24"/>
         </property>
+        <set name="orders" table="orders" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="customerid" not-null="true" />
+            </key>
+            <one-to-many class="Order" />
+        </set>
     </class>
 </hibernate-mapping>

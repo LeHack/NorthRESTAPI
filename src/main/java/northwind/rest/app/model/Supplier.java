@@ -1,6 +1,7 @@
 package northwind.rest.app.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,7 +34,7 @@ public class Supplier implements Serializable {
 
     private String homepage;
 
-//    private Set<Product> products = new HashSet<>(0);
+    private Collection<Product> products;
 
     public Integer getId() {
         return id;
@@ -129,5 +130,13 @@ public class Supplier implements Serializable {
 
     public void setHomepage(String homepage) {
         this.homepage = homepage;
+    }
+
+    public Collection<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Collection<Product> products) {
+        this.products = products;
     }
 }
