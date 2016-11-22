@@ -1,0 +1,50 @@
+<hibernate-mapping package="northwind.rest.app.model">
+    <class name="Order" table="orders">
+        <meta attribute="class-description">
+                This class contains order details.
+        </meta>
+        <id name="id" type="integer">
+            <column name="orderid"/>
+            <generator class="identity"/>
+        </id>
+        <property name="customerId" type="string">
+            <column name="customerid"/>
+        </property>
+        <property name="employeeId" type="integer">
+            <column name="employeeid"/>
+        </property>
+        <property name="orderDate" type="date">
+            <column name="orderdate"/>
+        </property>
+        <property name="requiredDate" type="date">
+            <column name="requireddate"/>
+        </property>
+        <property name="shippedDate" type="date">
+            <column name="shippeddate"/>
+        </property>
+        <property name="shipVia" type="integer">
+            <column name="shipvia"/>
+        </property>
+        <property name="freight" type="double">
+            <column name="freight"/>
+        </property>
+        <property name="shipName" type="string">
+            <column name="shipname" length="40"/>
+        </property>
+        <property name="shipAddress" type="string">
+            <column name="shipaddress" length="60"/>
+        </property>
+        <property name="shipCity" type="string">
+            <column name="shipcity" length="15"/>
+        </property>
+        <property name="shipRegion" type="string">
+            <column name="shipregion" length="15"/>
+        </property>
+        <property name="shipPostalCode" type="string">
+            <column name="shippostalcode" length="10"/>
+        </property>
+        <property name="shipCountry" type="string">
+            <column name="shipcountry" length="15"/>
+        </property>
+    </class>
+</hibernate-mapping>

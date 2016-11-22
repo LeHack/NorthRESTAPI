@@ -1,0 +1,41 @@
+<hibernate-mapping package="northwind.rest.app.model">
+    <class name="Customer" table="customers">
+        <meta attribute="class-description">
+                This class contains customer details.
+        </meta>
+        <id name="id" type="string">
+            <column name="customerid"/>
+            <generator class="identity"/>
+        </id>
+        <property name="companyName" type="string">
+            <column name="companyname" length="40" not-null="true"/>
+        </property>
+        <property name="contactName" type="string">
+            <column name="contactname" length="30"/>
+        </property>
+        <property name="contactTitle" type="string">
+            <column name="contacttitle" length="30"/>
+        </property>
+        <property name="address" type="string">
+            <column name="address" length="60"/>
+        </property>
+        <property name="city" type="string">
+            <column name="city" length="15"/>
+        </property>
+        <property name="region" type="string">
+            <column name="region" length="15"/>
+        </property>
+        <property name="postalCode" type="string">
+            <column name="postalcode" length="10"/>
+        </property>
+        <property name="country" type="string">
+            <column name="country" length="15"/>
+        </property>
+        <property name="phone" type="string">
+            <column name="phone" length="24"/>
+        </property>
+        <property name="fax" type="string">
+            <column name="fax" length="24"/>
+        </property>
+    </class>
+</hibernate-mapping>

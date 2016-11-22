@@ -1,7 +1,11 @@
 package northwind.rest.app.dao;
 
 import northwind.rest.app.model.Category;
+import northwind.rest.app.model.Customer;
+import northwind.rest.app.model.Employee;
+import northwind.rest.app.model.Order;
 import northwind.rest.app.model.Product;
+import northwind.rest.app.model.Shipper;
 import northwind.rest.app.model.Supplier;
 import northwind.rest.app.util.HibernateUtil;
 import org.hibernate.Query;
@@ -53,5 +57,41 @@ public class DaoTest {
         List<Product> products = query.list();
 
         Assert.assertNotNull(products);
+    }
+
+    @Test
+    public void testEmployeesDao_shouldReturnAllRows() {
+        String hql = "from Employee";
+        Query query = session.createQuery(hql);
+        List<Employee> employees = query.list();
+
+        Assert.assertNotNull(employees);
+    }
+
+    @Test
+    public void testOrdersDao_shouldReturnAllRows() {
+        String hql = "from Order";
+        Query query = session.createQuery(hql);
+        List<Order> orders = query.list();
+
+        Assert.assertNotNull(orders);
+    }
+
+    @Test
+    public void testCustomersDao_shouldReturnAllRows() {
+        String hql = "from Customer";
+        Query query = session.createQuery(hql);
+        List<Customer> customers = query.list();
+
+        Assert.assertNotNull(customers);
+    }
+
+    @Test
+    public void testShippersDao_shouldReturnAllRows() {
+        String hql = "from Shipper";
+        Query query = session.createQuery(hql);
+        List<Shipper> shippers = query.list();
+
+        Assert.assertNotNull(shippers);
     }
 }

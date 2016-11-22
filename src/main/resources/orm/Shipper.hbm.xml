@@ -1,0 +1,17 @@
+<hibernate-mapping package="northwind.rest.app.model">
+    <class name="Shipper" table="shippers">
+        <meta attribute="class-description">
+                This class contains shipper details.
+        </meta>
+        <id name="id" type="java.lang.Integer">
+            <column name="shipperid"/>
+            <generator class="identity"/>
+        </id>
+        <property name="companyName" type="string">
+            <column name="companyname" length="40" not-null="true"/>
+        </property>
+        <property name="phone" type="string">
+            <column name="phone" length="24"/>
+        </property>
+    </class>
+</hibernate-mapping>

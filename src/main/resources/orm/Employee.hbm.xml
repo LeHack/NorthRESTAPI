@@ -1,0 +1,62 @@
+<hibernate-mapping package="northwind.rest.app.model">
+    <class name="Employee" table="employees">
+        <meta attribute="class-description">
+                This class contains employee details.
+        </meta>
+        <id name="id" type="integer">
+            <column name="employeeid"/>
+            <generator class="identity"/>
+        </id>
+        <property name="lastName" type="string">
+            <column name="lastname" length="20" not-null="true"/>
+        </property>
+        <property name="firstName" type="string">
+            <column name="firstname" length="10" not-null="true"/>
+        </property>
+        <property name="title" type="string">
+            <column name="title" length="30"/>
+        </property>
+        <property name="titleOfCourtesy" type="string">
+            <column name="titleofcourtesy" length="25"/>
+        </property>
+        <property name="birthDate" type="date">
+            <column name="birthdate"/>
+        </property>
+        <property name="hireDate" type="date">
+            <column name="hiredate"/>
+        </property>
+        <property name="address" type="string">
+            <column name="address" length="60"/>
+        </property>
+        <property name="city" type="string">
+            <column name="city" length="15"/>
+        </property>
+        <property name="region" type="string">
+            <column name="region" length="15"/>
+        </property>
+        <property name="postalCode" type="string">
+            <column name="postalcode" length="10"/>
+        </property>
+        <property name="country" type="string">
+            <column name="country" length="15"/>
+        </property>
+        <property name="homePhone" type="string">
+            <column name="homephone" length="24"/>
+        </property>
+        <property name="extension" type="string">
+            <column name="extension" length="4"/>
+        </property>
+        <property name="photo" type="binary">
+            <column name="photo"/>
+        </property>
+        <property name="notes" type="text">
+            <column name="notes"/>
+        </property>
+        <property name="reportSto" type="integer">
+            <column name="reportsto"/>
+        </property>
+        <property name="photoPath" type="string">
+            <column name="photopath" length="255"/>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -29,3 +29,5 @@ select * from information_schema.tables
 lub
 select * from information_schema.tables
 where table_schema = 'information_schema'
+lub
+\dt
