@@ -5,10 +5,10 @@
         </meta>
 
         <composite-id name="id" class="OrderDetailsPK">
-            <key-many-to-one name="order" class="Order">
+            <key-many-to-one name="order" class="Order" lazy="false">
                 <column name="orderid" not-null="true" />
             </key-many-to-one>
-            <key-many-to-one name="product" class="Product">
+            <key-many-to-one name="product" class="Product" lazy="false">
                 <column name="productid" not-null="true" />
             </key-many-to-one>
         </composite-id>

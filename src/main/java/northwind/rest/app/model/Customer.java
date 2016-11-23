@@ -1,5 +1,7 @@
 package northwind.rest.app.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -9,6 +11,7 @@ import java.util.Collection;
 public class Customer implements Serializable {
 
     private String id, companyName, contactName, contactTitle, address, city, region, postalCode, country, phone, fax;
+    @JsonIgnore
     private Collection<Order> orders;
 
     public String getId() {

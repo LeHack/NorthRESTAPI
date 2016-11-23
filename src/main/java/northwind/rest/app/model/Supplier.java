@@ -1,5 +1,7 @@
 package northwind.rest.app.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
@@ -34,6 +36,7 @@ public class Supplier implements Serializable {
 
     private String homepage;
 
+    @JsonIgnore
     private Collection<Product> products;
 
     public Integer getId() {

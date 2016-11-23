@@ -1,5 +1,7 @@
 package northwind.rest.app.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -16,6 +18,7 @@ public class Employee implements Serializable {
         homePhone, extension, notes, photoPath;
     private Date birthDate, hireDate;
     private byte[] photo;
+    @JsonIgnore
     private Collection<Order> orders;
 
     public int getId() {
