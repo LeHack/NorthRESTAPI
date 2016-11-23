@@ -36,6 +36,7 @@
         <mapping resource="orm/Customer.hbm.xml"/>
         <mapping resource="orm/Employee.hbm.xml"/>
         <mapping resource="orm/Order.hbm.xml"/>
+        <mapping resource="orm/OrderDetails.hbm.xml"/>
 
     </session-factory>
 </hibernate-configuration>

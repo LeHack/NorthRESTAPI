@@ -1,0 +1,27 @@
+<hibernate-mapping package="northwind.rest.app.model">
+    <class name="OrderDetails" table="order_details">
+        <meta attribute="class-description">
+            This class contains suppliers details.
+        </meta>
+
+        <composite-id name="id" class="OrderDetailsPK">
+            <key-many-to-one name="order" class="Order">
+                <column name="orderid" not-null="true" />
+            </key-many-to-one>
+            <key-many-to-one name="product" class="Product">
+                <column name="productid" not-null="true" />
+            </key-many-to-one>
+        </composite-id>
+
+        <property name="unitPrice" type="java.lang.Double">
+            <column name="unitprice" not-null="true" />
+        </property>
+        <property name="quantity" type="java.lang.Integer">
+            <column name="quantity" not-null="true" />
+        </property>
+        <property name="discount" type="java.lang.Double">
+            <column name="discount" not-null="true" />
+        </property>
+
+    </class>
+</hibernate-mapping>

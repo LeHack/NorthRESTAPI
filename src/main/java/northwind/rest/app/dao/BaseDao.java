@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * DAO layer for products.
+ * DAO base object.
  */
 public class BaseDao {
 

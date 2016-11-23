@@ -16,7 +16,7 @@
         <property name="quantityPerUnit" type="java.lang.String">
             <column name="quantityperunit" length="20"/>
         </property>
-        <property name="unitPrice" type="java.lang.Float">
+        <property name="unitPrice" type="java.lang.Double">
             <column name="unitprice"/>
         </property>
         <property name="unitsInStock" type="java.lang.Integer">

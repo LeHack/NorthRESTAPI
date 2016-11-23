@@ -17,7 +17,7 @@ public class Product implements Serializable {
 
     private String quantityPerUnit;
 
-    private Float unitPrice;
+    private Double unitPrice;
 
     private Integer unitsInStock;
 
@@ -67,11 +67,11 @@ public class Product implements Serializable {
         this.quantityPerUnit = quantityPerUnit;
     }
 
-    public Float getUnitPrice() {
+    public Double getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(Float unitPrice) {
+    public void setUnitPrice(Double unitPrice) {
         this.unitPrice = unitPrice;
     }
 
