@@ -1,5 +1,7 @@
 package northwind.rest.app.dao;
 
+import org.hibernate.Session;
+
 import java.util.List;
 
 /**
@@ -10,4 +12,6 @@ import java.util.List;
 public interface Dao<E> {
 
     List<E> getAll();
+
+    E getById(Session session, Integer id);
 }

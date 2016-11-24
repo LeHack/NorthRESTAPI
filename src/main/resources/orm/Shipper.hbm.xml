@@ -5,7 +5,7 @@
         </meta>
         <id name="id" type="java.lang.Integer">
             <column name="shipperid"/>
-            <generator class="identity"/>
+            <generator class="native"/>
         </id>
         <property name="companyName" type="string">
             <column name="companyname" length="40" not-null="true"/>
@@ -20,4 +20,13 @@
             <one-to-many class="Order" />
         </set>
     </class>
+
+    <sql-query name="findShipperById">
+        <return alias="Shipper" class="Shipper"/>
+        <![CDATA[
+            select * from shippers s
+            where s.shipperid = :shipperId
+        ]]>
+    </sql-query>
+
 </hibernate-mapping>

@@ -5,7 +5,7 @@
         </meta>
         <id name="id" type="integer">
             <column name="employeeid"/>
-            <generator class="identity"/>
+            <generator class="native"/>
         </id>
         <property name="lastName" type="string">
             <column name="lastname" length="20" not-null="true"/>

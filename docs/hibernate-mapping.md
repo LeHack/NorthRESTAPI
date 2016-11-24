@@ -1,10 +1,8 @@
 # Mapowanie
 Mapowanie możemy w hibernate przeprowadzić przy użyciu adnotacji lub języka XML, w naszym projekcie użyliśmy konfiguracji XML. Mapowanie obiektów na rekordy w bazie danych przebiega w kilku krokach:
-1. Tworzymy obiekt (POJO)
-  Obiekt musi zawierać settery i gettery oraz domyślny konstruktor (bezargumentowy)
-  Jeśli obiekt jest złożonym kluczem dla tabeli to musi również implementować interfejs Serializable oraz przesłaniać metody __equals__ i __hashcode__
-2. Tworzymy mapowanie w pliku z rozszerzeniem .hbm.xml
-3. Dodajemy plik z mapowaniem do pliku konfiguracyjnego hibernate
+- Tworzymy obiekt (POJO) - obiekt musi zawierać settery i gettery oraz domyślny konstruktor (bezargumentowy), jeśli obiekt jest złożonym kluczem dla tabeli to musi również implementować interfejs Serializable oraz przesłaniać metody __equals__ i __hashcode__
+- Tworzymy mapowanie w pliku z rozszerzeniem .hbm.xml
+- Dodajemy plik z mapowaniem do pliku konfiguracyjnego hibernate
 
 Poniżej przykładowe mapowanie dla tabeli product.
 Klasa Product:

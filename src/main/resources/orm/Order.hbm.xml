@@ -5,7 +5,7 @@
         </meta>
         <id name="id" type="integer">
             <column name="orderid"/>
-            <generator class="identity"/>
+            <generator class="native"/>
         </id>
         <many-to-one name="customer" class="Customer" fetch="select" lazy="false">
             <column name="customerId" not-null="true"/>

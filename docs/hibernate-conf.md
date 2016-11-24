@@ -1,6 +1,7 @@
 # Konfiguracja Hibernate
 
 Architektura Hibernate:
+
 ![Hibernate architecture Text](http://docs.jboss.org/hibernate/orm/5.1/userguide/html_single/images/architecture/data_access_layers.svg)
 
 W celu konfiguracji hibernate'a możemy użyć:
@@ -54,14 +55,10 @@ My zastosowaliśmy konfigurację poprzez plik XML:
 Powyżej ustawienia hibernate dla bazy PostgreSQL.
 
 Hibernate posiada 4 główne interfejsy:
-- SessionFactory
-  thread-safe, obiekt typu immutable, jest fabryką dla obiektów typu Session, jeden obiekt dla konkretnej bazy danych, może istnieć więcej SessionFactory jeśli utrzymujemy połączenie z większą ilością baz danych
-- Session
-  single-thread, reprezentuje tzw. unit of work, wewnętrznie bazuje na JDBC java.sql.Connection i jest fabryką dla obiektów typu Transaction. Zawiera kolejkę zapytań SQL które mają być zsynchronizowane z bazą danych i mapę obiektów monitorowanych przez tą sesję
-- Transaction
-  single-thread, służy do programistycznego ustawiania transakcji
-- Query
-  obiekt do tworzenia zapytań SQL, hibernate posiada swój własny obiektowo zorientowany język zapytań HQL, można też używać SQL
+- SessionFactory - thread-safe, obiekt typu immutable, jest fabryką dla obiektów typu Session, jeden obiekt dla konkretnej bazy danych, może istnieć więcej SessionFactory jeśli utrzymujemy połączenie z większą ilością baz danych
+- Session - single-thread, reprezentuje tzw. unit of work, wewnętrznie bazuje na JDBC java.sql.Connection i jest fabryką dla obiektów typu Transaction. Zawiera kolejkę zapytań SQL które mają być zsynchronizowane z bazą danych i mapę obiektów monitorowanych przez tą sesję
+- Transaction - single-thread, służy do programistycznego ustawiania transakcji
+- Query - obiekt do tworzenia zapytań SQL, hibernate posiada swój własny obiektowo zorientowany język zapytań HQL, można też używać SQL
 
 ### Konfiguracja SessionFactory
 Tworzymy klasę pomocniczą HibernateUtil która będzie odpowiedzialna za inicjację obiektu SessionFactory i łatwy dostęp do niego (potrzebujemy SessionFactory w warstwie dostępu do obiektu DAO by tworzyć obiekty typu Session).

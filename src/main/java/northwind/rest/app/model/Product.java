@@ -25,7 +25,7 @@ public class Product implements Serializable {
 
     private Integer reorderLevel;
 
-    private Boolean discontinued;
+    private Integer discontinued;
 
     public Integer getId() {
         return id;
@@ -99,11 +99,11 @@ public class Product implements Serializable {
         this.reorderLevel = reorderLevel;
     }
 
-    public Boolean getDiscontinued() {
+    public Integer getDiscontinued() {
         return discontinued;
     }
 
-    public void setDiscontinued(Boolean discontinued) {
+    public void setDiscontinued(Integer discontinued) {
         this.discontinued = discontinued;
     }
 }
