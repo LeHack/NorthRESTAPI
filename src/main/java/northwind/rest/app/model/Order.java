@@ -127,4 +127,24 @@ public class Order implements Serializable {
     public void setShipCountry(String shipCountry) {
         this.shipCountry = shipCountry;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", customer=" + customer +
+                ", employee=" + employee +
+                ", shipVia=" + shipVia +
+                ", orderDate=" + orderDate +
+                ", requiredDate=" + requiredDate +
+                ", shippedDate=" + shippedDate +
+                ", freight=" + freight +
+                ", shipName='" + shipName + '\'' +
+                ", shipAddress='" + shipAddress + '\'' +
+                ", shipCity='" + shipCity + '\'' +
+                ", shipRegion='" + shipRegion + '\'' +
+                ", shipPostalCode='" + shipPostalCode + '\'' +
+                ", shipCountry='" + shipCountry + '\'' +
+                '}';
+    }
 }
