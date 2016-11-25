@@ -3,9 +3,9 @@
         <meta attribute="class-description">
                 This class contains customer details.
         </meta>
-        <id name="id" type="java.lang.Integer">
+        <id name="id" type="java.lang.String">
             <column name="customerid"/>
-            <generator class="native"/>
+            <generator class="identity"/>
         </id>
         <property name="companyName" type="string">
             <column name="companyname" length="40" not-null="true"/>

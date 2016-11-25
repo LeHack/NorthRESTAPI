@@ -5,7 +5,9 @@
         </meta>
         <id name="id" type="java.lang.Integer">
             <column name="supplierid"/>
-            <generator class="native"/>
+            <generator class="identity">
+                <param name="sequence">suppliers_id_seq</param>
+            </generator>
         </id>
         <property name="companyName" type="java.lang.String">
             <column name="companyname" length="40" not-null="true"/>

@@ -30,10 +30,8 @@ public class ProductDaoTest {
     public void testSave_ShouldPersistNewProduct() throws Exception {
         Category category = session.get(Category.class, 1);
         Supplier supplier = session.get(Supplier.class, 2);
-        Integer id = productDao.getSize(session, Product.class).intValue();
 
         Product product = new Product();
-        product.setId(id);
         product.setCategory(category);
         product.setSupplier(supplier);
         product.setDiscontinued(0);
