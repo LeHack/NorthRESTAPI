@@ -1,10 +1,7 @@
 package northwind.rest.app.dao;
 
 import northwind.rest.app.util.HibernateUtil;
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.SimpleExpression;
 
@@ -42,7 +39,7 @@ public class BaseDao {
             query.setParameter(param.getKey(), param.getValue());
         }
 
-        List<T> items =  query.list();
+        List<T> items = query.list();
         return (items == null) ? null : items.get(0);
     }
 
@@ -56,6 +53,21 @@ public class BaseDao {
         Criteria criteria = session.createCriteria(clazz);
         criteria.setProjection(Projections.rowCount());
         return (Long) criteria.uniqueResult();
+    }
+
+    public void rollbackTransaction(Transaction transaction, RuntimeException exp) throws RuntimeException {
+        try {
+            transaction.rollback();
+        } catch (RuntimeException re) {
+            System.err.println("Couldn’t roll back transaction " + re);
+        }
+        throw exp;
+    }
+
+    public void closeSession(Session session) {
+        if (session != null) {
+            session.close();
+        }
     }
 
     public <T> Integer save(Session session, T entity) {
