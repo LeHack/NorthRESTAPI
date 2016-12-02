@@ -19,6 +19,6 @@ public class ProductDao extends BaseDao implements Dao<Product> {
     public Product getById(Session session, Integer id) {
         List<Product> products = getByCriteriaAndRestriction(
                 session, Product.class, Restrictions.eq("id", id));
-        return (products == null) ? null : products.get(0);
+        return (products.isEmpty() ? null : products.get(0));
     }
 }

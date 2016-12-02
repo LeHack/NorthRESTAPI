@@ -23,7 +23,6 @@ public class CategoryService {
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Category> getAll() {
-
         return categoryDao.getAll();
     }
 }

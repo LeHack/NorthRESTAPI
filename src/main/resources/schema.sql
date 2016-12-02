@@ -33,13 +33,14 @@ SET default_with_oids = false;
 -- Name: categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
+CREATE SEQUENCE categories_id_seq;
 CREATE TABLE categories (
-    categoryid smallint NOT NULL,
+    categoryid smallint NOT NULL DEFAULT nextval('categories_id_seq'),
     categoryname character varying(15) NOT NULL,
     description text,
     picture bytea
 );
-
+ALTER SEQUENCE categories_id_seq OWNED BY categories.categoryid;
 
 --
 -- Name: customercustomerdemo; Type: TABLE; Schema: public; Owner: -; Tablespace: 
@@ -79,13 +80,13 @@ CREATE TABLE customers (
     fax character varying(24)
 );
 
-
 --
 -- Name: employees; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
+CREATE SEQUENCE employees_id_seq;
 CREATE TABLE employees (
-    employeeid smallint NOT NULL,
+    employeeid smallint NOT NULL DEFAULT nextval('employees_id_seq'),
     lastname character varying(20) NOT NULL,
     firstname character varying(10) NOT NULL,
     title character varying(30),
@@ -104,7 +105,7 @@ CREATE TABLE employees (
     reportsto smallint,
     photopath character varying(255)
 );
-
+ALTER SEQUENCE employees_id_seq OWNED BY employees.employeeid;
 
 --
 -- Name: employeeterritories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
@@ -114,17 +115,6 @@ CREATE TABLE employeeterritories (
     employeeid smallint NOT NULL,
     territoryid character varying(20) NOT NULL
 );
-
-
---
--- Name: foo; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE foo (
-    idx integer NOT NULL,
-    name text
-);
-
 
 --
 -- Name: order_details; Type: TABLE; Schema: public; Owner: -; Tablespace: 
@@ -143,8 +133,9 @@ CREATE TABLE order_details (
 -- Name: orders; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
+CREATE SEQUENCE orders_id_seq;
 CREATE TABLE orders (
-    orderid smallint NOT NULL,
+    orderid smallint NOT NULL DEFAULT nextval('orders_id_seq'),
     customerid bpchar,
     employeeid smallint,
     orderdate date,
@@ -159,14 +150,15 @@ CREATE TABLE orders (
     shippostalcode character varying(10),
     shipcountry character varying(15)
 );
-
+ALTER SEQUENCE orders_id_seq OWNED BY orders.orderid;
 
 --
 -- Name: products; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
+CREATE SEQUENCE products_id_seq;
 CREATE TABLE products (
-    productid smallint NOT NULL,
+    productid smallint NOT NULL DEFAULT nextval('products_id_seq'),
     productname character varying(40) NOT NULL,
     supplierid smallint,
     categoryid smallint,
@@ -177,46 +169,38 @@ CREATE TABLE products (
     reorderlevel smallint,
     discontinued integer NOT NULL
 );
-
+ALTER SEQUENCE products_id_seq OWNED BY products.productid;
 
 --
 -- Name: region; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
+CREATE SEQUENCE region_id_seq;
 CREATE TABLE region (
-    regionid smallint NOT NULL,
+    regionid smallint NOT NULL DEFAULT nextval('region_id_seq'),
     regiondescription bpchar NOT NULL
 );
-
+ALTER SEQUENCE region_id_seq OWNED BY region.regionid;
 
 --
 -- Name: shippers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
+CREATE SEQUENCE shippers_id_seq;
 CREATE TABLE shippers (
-    shipperid smallint NOT NULL,
+    shipperid smallint NOT NULL DEFAULT nextval('shippers_id_seq'),
     companyname character varying(40) NOT NULL,
     phone character varying(24)
 );
-
-
---
--- Name: shippers_tmp; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE shippers_tmp (
-    shipperid smallint NOT NULL,
-    companyname character varying(40) NOT NULL,
-    phone character varying(24)
-);
-
+ALTER SEQUENCE shippers_id_seq OWNED BY shippers.shipperid;
 
 --
 -- Name: suppliers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
+CREATE SEQUENCE suppliers_id_seq;
 CREATE TABLE suppliers (
-    supplierid smallint NOT NULL,
+    supplierid smallint NOT NULL DEFAULT nextval('suppliers_id_seq'),
     companyname character varying(40) NOT NULL,
     contactname character varying(30),
     contacttitle character varying(30),
@@ -229,7 +213,7 @@ CREATE TABLE suppliers (
     fax character varying(24),
     homepage text
 );
-
+ALTER SEQUENCE suppliers_id_seq OWNED BY suppliers.supplierid;
 
 --
 -- Name: territories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
@@ -240,7 +224,6 @@ CREATE TABLE territories (
     territorydescription bpchar NOT NULL,
     regionid smallint NOT NULL
 );
-
 
 --
 -- Name: usstates; Type: TABLE; Schema: public; Owner: -; Tablespace: 
@@ -445,16 +428,6 @@ INSERT INTO employeeterritories VALUES (9, '48084');
 INSERT INTO employeeterritories VALUES (9, '48304');
 INSERT INTO employeeterritories VALUES (9, '55113');
 INSERT INTO employeeterritories VALUES (9, '55439');
-
-
---
--- Data for Name: foo; Type: TABLE DATA; Schema: public; Owner: -
---
-
-INSERT INTO foo VALUES (1, 'kkmm');
-INSERT INTO foo VALUES (2, 'kkssmm');
-INSERT INTO foo VALUES (3, 'qsfdfs');
-
 
 --
 -- Data for Name: order_details; Type: TABLE DATA; Schema: public; Owner: -
@@ -3557,19 +3530,6 @@ INSERT INTO shippers VALUES (4, 'Alliance Shippers', '1-800-222-0451');
 INSERT INTO shippers VALUES (5, 'UPS', '1-800-782-7892');
 INSERT INTO shippers VALUES (6, 'DHL', '1-800-225-5345');
 
-
---
--- Data for Name: shippers_tmp; Type: TABLE DATA; Schema: public; Owner: -
---
-
-INSERT INTO shippers_tmp VALUES (1, 'Speedy Express', '(503) 555-9831');
-INSERT INTO shippers_tmp VALUES (2, 'United Package', '(503) 555-3199');
-INSERT INTO shippers_tmp VALUES (3, 'Federal Shipping', '(503) 555-9931');
-INSERT INTO shippers_tmp VALUES (4, 'Alliance Shippers', '1-800-222-0451');
-INSERT INTO shippers_tmp VALUES (5, 'UPS', '1-800-782-7892');
-INSERT INTO shippers_tmp VALUES (6, 'DHL', '1-800-225-5345');
-
-
 --
 -- Data for Name: suppliers; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -3720,15 +3680,6 @@ INSERT INTO usstates VALUES (49, 'West Virginia', 'WV', 'south');
 INSERT INTO usstates VALUES (50, 'Wisconsin', 'WI', 'midwest');
 INSERT INTO usstates VALUES (51, 'Wyoming', 'WY', 'west');
 
-
---
--- Name: foo_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY foo
-    ADD CONSTRAINT foo_pkey PRIMARY KEY (idx);
-
-
 --
 -- Name: pk_categories; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
@@ -3818,14 +3769,6 @@ ALTER TABLE ONLY shippers
 
 
 --
--- Name: pk_shippers_tmp; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY shippers_tmp
-    ADD CONSTRAINT pk_shippers_tmp PRIMARY KEY (shipperid);
-
-
---
 -- Name: pk_suppliers; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -3850,6 +3793,16 @@ REVOKE ALL ON SCHEMA public FROM postgres;
 GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
+--
+-- Reset sequences after import
+--
+SELECT setval('categories_id_seq', COALESCE((SELECT MAX(categoryid)+1 FROM categories), 1), false);
+SELECT setval('employees_id_seq', COALESCE((SELECT MAX(employeeid)+1 FROM employees), 1), false);
+SELECT setval('orders_id_seq', COALESCE((SELECT MAX(orderid)+1 FROM orders), 1), false);
+SELECT setval('products_id_seq', COALESCE((SELECT MAX(productid)+1 FROM products), 1), false);
+SELECT setval('region_id_seq', COALESCE((SELECT MAX(regionid)+1 FROM region), 1), false);
+SELECT setval('shippers_id_seq', COALESCE((SELECT MAX(shipperid)+1 FROM shippers), 1), false);
+SELECT setval('suppliers_id_seq', COALESCE((SELECT MAX(supplierid)+1 FROM suppliers), 1), false);
 
 --
 -- PostgreSQL database dump complete

@@ -1,7 +1,9 @@
 package northwind.rest.app.dao;
 
 import northwind.rest.app.model.Order;
+
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
@@ -16,6 +18,8 @@ public class OrderDao extends BaseDao implements Dao<Order> {
 
     @Override
     public Order getById(Session session, Integer id) {
-        return null;
+        List<Order> orders = getByCriteriaAndRestriction(
+                session, Order.class, Restrictions.eq("id", id));
+        return (orders.isEmpty() ? null : orders.get(0));
     }
 }

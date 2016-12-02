@@ -1,7 +1,6 @@
 package northwind.rest.app.service;
 
 import northwind.rest.app.dao.ProductDao;
-import northwind.rest.app.model.OrderDetails;
 import northwind.rest.app.model.Product;
 
 import javax.ws.rs.GET;
