@@ -15,7 +15,7 @@
         <property name="description" type="string">
             <column name="description"/>
         </property>
-        <property name="picture" type="string">
+        <property name="picture" type="binary">
             <column name="picture"/>
         </property>
         <set name="products" table="products" inverse="true" lazy="true" fetch="select">
