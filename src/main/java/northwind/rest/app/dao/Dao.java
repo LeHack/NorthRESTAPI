@@ -1,8 +1,8 @@
 package northwind.rest.app.dao;
 
-import org.hibernate.Session;
-
 import java.util.List;
+
+import northwind.rest.app.dao.BaseDao.SessionNotAvailable;
 
 /**
  * Common interface for all DAO objects.
@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface Dao<E> {
 
-    List<E> getAll();
+    List<E> getAll() throws SessionNotAvailable;
 
-    E getById(Session session, Integer id);
+    E getById(Object id) throws SessionNotAvailable;
 }

@@ -5,6 +5,7 @@ import northwind.rest.app.model.Customer;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -15,15 +16,22 @@ import java.util.List;
  * url: /rest/customer/*
  */
 @Path("/customer")
-public class CustomerService {
-
-    private CustomerDao customerDao = new CustomerDao();
+public class CustomerService extends BaseService {
+    public CustomerService() {
+        dao = new CustomerDao();
+    }
 
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Customer> getAll() {
+        return super.getAll();
+    }
 
-        return customerDao.getAll();
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Customer getOne(@PathParam("id")String id) {
+        return super.getOne(id);
     }
 }

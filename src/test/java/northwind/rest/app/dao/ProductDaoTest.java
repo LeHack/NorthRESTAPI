@@ -29,7 +29,7 @@ public class ProductDaoTest {
         Product product = null;
 
         try {
-            session = productDao.getSession();
+            session = productDao.openSession();
             transaction = session.beginTransaction();
 
             // load() return a proxy (fake object) with given id, not a real db object
@@ -48,14 +48,14 @@ public class ProductDaoTest {
             product.setUnitsInStock(1000);
             product.setUnitsOnOrder(10);
 
-            Integer productId = productDao.save(session, product);
+            Integer productId = productDao.save(product);
 
             retrivedProduct = session.get(Product.class, productId);
             transaction.commit();
         } catch (RuntimeException re) {
             productDao.rollbackTransaction(transaction, re);
         } finally {
-            productDao.closeSession(session);
+            productDao.closeSession();
         }
 
         Assert.assertNotNull(retrivedProduct);
@@ -75,7 +75,7 @@ public class ProductDaoTest {
         Double price = 245435.99;
         Integer discontinued = 1;
         try {
-            session = productDao.getSession();
+            session = productDao.openSession();
             transaction = session.beginTransaction();
 
             product = session.get(Product.class, 70);
@@ -83,9 +83,6 @@ public class ProductDaoTest {
             product.setDiscontinued(discontinued);
             product.setUnitPrice(price);
 
-            // update product without execution of method: saveOrUpdate(), update()
-            // session monitors the entity and persist when changes occurs (during transaction commit)
-//            session.update(product);
             transaction.commit();
 
             expectedProduct = session.get(Product.class, 70);
@@ -93,7 +90,7 @@ public class ProductDaoTest {
         } catch (RuntimeException re) {
             productDao.rollbackTransaction(transaction, re);
         } finally {
-            productDao.closeSession(session);
+            productDao.closeSession();
         }
 
         Assert.assertEquals(expectedProduct.getName(), name);
@@ -109,7 +106,7 @@ public class ProductDaoTest {
         Product product = null;
         Integer existingProductId = persistTestProduct();
         try {
-            session = productDao.getSession();
+            session = productDao.openSession();
             transaction = session.beginTransaction();
 
             product = session.get(Product.class, existingProductId);
@@ -122,12 +119,12 @@ public class ProductDaoTest {
         } catch (RuntimeException re) {
             productDao.rollbackTransaction(transaction, re);
         } finally {
-            productDao.closeSession(session);
+            productDao.closeSession();
         }
     }
 
     private Integer persistTestProduct() {
-        Session session = productDao.getSession();
+        Session session = productDao.openSession();
         session.beginTransaction();
 
         Category category = session.load(Category.class, 1);
@@ -146,8 +143,8 @@ public class ProductDaoTest {
 
         Integer id = (Integer) session.save(product);
         session.getTransaction().commit();
+        productDao.closeSession();
 
         return id;
     }
-
 }

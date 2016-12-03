@@ -2,7 +2,7 @@ package northwind.rest.app.dao;
 
 import northwind.rest.app.util.HibernateUtil;
 import org.hibernate.*;
-import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.SimpleExpression;
 
 import java.util.Collections;
@@ -13,12 +13,14 @@ import java.util.Map;
 /**
  * DAO base object.
  */
-public class BaseDao {
+public abstract class BaseDao {
 
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private Session session = null;
 
+    public abstract <T> List<T> getAll() throws SessionNotAvailable;
     public <T> List<T> getAll(String tableName, Class<T> contentType) {
-        Session session = sessionFactory.openSession();
+        Session session = getSession();
         session.beginTransaction();
 
         String hql = "from " + tableName;
@@ -33,8 +35,15 @@ public class BaseDao {
         return items;
     }
 
-    public <T> T getByNamedQueryAndParam(Session session, String namedQuery, HashMap<String, Object> params) {
-        Query query = session.getNamedQuery(namedQuery);
+    public <T> T getById(Integer id) { T o = null; return o; };
+    public <T> T getById(String id)  { T o = null; return o; };
+    public <T> T getById(Class<T> cls, Object id) {
+        List<T> objects = getByCriteriaAndRestriction( cls, Restrictions.eq("id", id) );
+        return (objects.isEmpty() ? null : objects.get(0));
+    }
+
+    public <T> T getByNamedQueryAndParam(String namedQuery, HashMap<String, Object> params) {
+        Query query = getSession().getNamedQuery(namedQuery);
         for (Map.Entry<String, Object> param : params.entrySet()) {
             query.setParameter(param.getKey(), param.getValue());
         }
@@ -43,16 +52,10 @@ public class BaseDao {
         return (items == null) ? null : items.get(0);
     }
 
-    public <T> List<T> getByCriteriaAndRestriction(Session session, Class<T> tClass, SimpleExpression simpleExpression) {
-        Criteria criteria = session.createCriteria(tClass).add(simpleExpression);
+    public <T> List<T> getByCriteriaAndRestriction(Class<T> tClass, SimpleExpression simpleExpression) {
+        Criteria criteria = getSession().createCriteria(tClass).add(simpleExpression);
         List<T> items = criteria.list();
         return (items == null) ? Collections.emptyList() : items;
-    }
-
-    public Long getSize(Session session, Class clazz) {
-        Criteria criteria = session.createCriteria(clazz);
-        criteria.setProjection(Projections.rowCount());
-        return (Long) criteria.uniqueResult();
     }
 
     public void rollbackTransaction(Transaction transaction, RuntimeException exp) throws RuntimeException {
@@ -64,26 +67,36 @@ public class BaseDao {
         throw exp;
     }
 
-    public void closeSession(Session session) {
+    public <T> Integer save(T entity) {
+        return (Integer) getSession().save(entity);
+    }
+
+    public <T> void update(T entity) {
+        getSession().saveOrUpdate(entity);
+    }
+
+    public <T> void delete(T entity) {
+        getSession().delete(entity);
+    }
+
+    public Session openSession() {
+        if (session == null)
+            session = sessionFactory.openSession();
+        return session;
+    }
+
+    public void closeSession() {
         if (session != null) {
             session.close();
+            session = null;
         }
     }
 
-    public <T> Integer save(Session session, T entity) {
-        return (Integer) session.save(entity);
-    }
-
-    public <T> void update(Session session, T entity) {
-        session.saveOrUpdate(entity);
-    }
-
-    public <T> void delete(Session session, T entity) {
-        session.delete(entity);
-    }
-
     public Session getSession() {
-        return sessionFactory.openSession();
+        if (session == null)
+            throw new SessionNotAvailable();
+        return session;
     }
 
+    public class SessionNotAvailable extends RuntimeException {}
 }

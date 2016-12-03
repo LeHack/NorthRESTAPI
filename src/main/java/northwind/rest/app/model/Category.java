@@ -13,7 +13,8 @@ import java.util.Set;
 public class Category implements Serializable {
 
     private Integer id;
-    private String name, description, picture;
+    private String name, description;
+    private byte[] picture;
     @JsonIgnore
     private Collection<Product> products;
 
@@ -41,11 +42,11 @@ public class Category implements Serializable {
         this.description = description;
     }
 
-    public String getPicture() {
+    public byte[] getPicture() {
         return picture;
     }
 
-    public void setPicture(String picture) {
+    public void setPicture(byte[] picture) {
         this.picture = picture;
     }
 

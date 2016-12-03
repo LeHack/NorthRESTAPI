@@ -16,23 +16,22 @@ import java.util.List;
  * url: /rest/product/*
  */
 @Path("/product")
-public class ProductService {
-
-    private ProductDao productDao = new ProductDao();
+public class ProductService extends BaseService {
+    public ProductService() {
+        dao = new ProductDao();
+    }
 
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Product> getAll() {
-
-        return productDao.getAll();
+        return super.getAll();
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Product getOne(@PathParam("id")Integer id) {
-
-        return productDao.getById(productDao.getSession(), id);
+        return super.getOne(id);
     }
 }

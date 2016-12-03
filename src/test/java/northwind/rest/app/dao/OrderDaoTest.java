@@ -38,7 +38,7 @@ public class OrderDaoTest {
         Employee employee = null;
 
         try {
-            session = orderDao.getSession();
+            session = orderDao.openSession();
             transaction = session.beginTransaction();
 
             // load() return a proxy (fake object) with given id, not a real db object
@@ -58,14 +58,14 @@ public class OrderDaoTest {
             order.setShipAddress("Somewhere street");
             order.setShipCity("Shiperville");
 
-            Integer orderId = orderDao.save(session, order);
+            Integer orderId = orderDao.save(order);
 
             retrievedOrder = session.get(Order.class, orderId);
             transaction.commit();
         } catch (RuntimeException re) {
             orderDao.rollbackTransaction(transaction, re);
         } finally {
-            orderDao.closeSession(session);
+            orderDao.closeSession();
         }
 
         assertNotNull(retrievedOrder);
@@ -87,7 +87,7 @@ public class OrderDaoTest {
         Date shippedDate = asDate("1996-07-16");
         String shipName = "Vins et alcools Chevalier";
         try {
-            session = orderDao.getSession();
+            session = orderDao.openSession();
             transaction = session.beginTransaction();
 
             customer = session.load(Customer.class, "ALFKI");
@@ -110,7 +110,7 @@ public class OrderDaoTest {
         } catch (RuntimeException re) {
             orderDao.rollbackTransaction(transaction, re);
         } finally {
-            orderDao.closeSession(session);
+            orderDao.closeSession();
         }
         assertNotNull(expectedOrder);
     }
@@ -123,7 +123,7 @@ public class OrderDaoTest {
         Order order = null;
         int existingOrderId = persistTestOrder();
         try {
-            session = orderDao.getSession();
+            session = orderDao.openSession();
             transaction = session.beginTransaction();
 
             order = session.get(Order.class, existingOrderId);
@@ -139,12 +139,12 @@ public class OrderDaoTest {
         } catch (RuntimeException re) {
             orderDao.rollbackTransaction(transaction, re);
         } finally {
-            orderDao.closeSession(session);
+            orderDao.closeSession();
         }
     }
 
     private Integer persistTestOrder() {
-        Session session = orderDao.getSession();
+        Session session = orderDao.openSession();
         session.beginTransaction();
 
         Customer customer = session.load(Customer.class, "ALFKI");

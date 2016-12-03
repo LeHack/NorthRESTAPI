@@ -1,7 +1,13 @@
 package northwind.rest.app.service;
 
+import northwind.rest.app.dao.CustomerDao;
+import northwind.rest.app.dao.EmployeeDao;
 import northwind.rest.app.dao.OrderDao;
+import northwind.rest.app.dao.ShipperDao;
+import northwind.rest.app.model.Customer;
+import northwind.rest.app.model.Employee;
 import northwind.rest.app.model.Order;
+import northwind.rest.app.model.Shipper;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -16,22 +22,71 @@ import java.util.List;
  * url: /rest/order/*
  */
 @Path("/order")
-public class OrderService {
-
-    private OrderDao orderDao = new OrderDao();
+public class OrderService extends BaseService {
+    public OrderService() {
+        dao = new OrderDao();
+    }
 
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Order> getAll() {
-        return orderDao.getAll();
+        return super.getAll();
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Order getOne(@PathParam("id")Integer id) {
-        return orderDao.getById(orderDao.getSession(), id);
+        return super.getOne(id);
+    }
+
+    @GET
+    @Path("/customer/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Order> getByCustomer(@PathParam("id")String id) {
+        List<Order> orders;
+        CustomerDao cDao = new CustomerDao();
+        cDao.openSession();
+        Customer c = cDao.getById(id);
+        cDao.closeSession();
+
+        dao.openSession();
+        orders = ((OrderDao)dao).getByCustomer(c);
+        dao.closeSession();
+        return orders;
+    }
+
+    @GET
+    @Path("/employee/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Order> getByEmployee(@PathParam("id")Integer id) {
+        List<Order> orders;
+        EmployeeDao eDao = new EmployeeDao();
+        eDao.openSession();
+        Employee e = eDao.getById(id);
+        eDao.closeSession();
+
+        dao.openSession();
+        orders = ((OrderDao)dao).getByEmployee(e);
+        dao.closeSession();
+        return orders;
+    }
+
+    @GET
+    @Path("/shipper/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Order> getByShipper(@PathParam("id")Integer id) {
+        List<Order> orders;
+        ShipperDao sDao = new ShipperDao();
+        sDao.openSession();
+        Shipper s = sDao.getById(id);
+        sDao.closeSession();
+
+        dao.openSession();
+        orders = ((OrderDao)dao).getByShipper(s);
+        dao.closeSession();
+        return orders;
     }
 
 }
