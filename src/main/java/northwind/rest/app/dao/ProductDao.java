@@ -4,10 +4,15 @@ import northwind.rest.app.model.Product;
 
 import java.util.List;
 
+import org.hibernate.Session;
+
 /**
  * DAO layer for products.
  */
 public class ProductDao extends BaseDao implements Dao<Product> {
+    public ProductDao(Session... s) {
+        super(s);
+    }
 
     public List<Product> getAll() {
         return getAll("Product", Product.class);

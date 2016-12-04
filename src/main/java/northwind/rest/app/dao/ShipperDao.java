@@ -5,10 +5,15 @@ import northwind.rest.app.model.Shipper;
 import java.util.HashMap;
 import java.util.List;
 
+import org.hibernate.Session;
+
 /**
  * DAO layer for shippers.
  */
 public class ShipperDao extends BaseDao implements Dao<Shipper> {
+    public ShipperDao(Session... s) {
+        super(s);
+    }
 
     public List<Shipper> getAll() {
         return getAll("Shipper", Shipper.class);

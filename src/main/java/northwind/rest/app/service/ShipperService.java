@@ -17,6 +17,7 @@ import org.hibernate.Transaction;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -67,14 +68,16 @@ public class ShipperService extends BaseService {
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateShipper(Shipper s ) throws URISyntaxException {
+    public Response updateShipper(Shipper s) throws URISyntaxException {
         if(s == null){
             return Response.status(400).entity("Please specify shipper details to update.").build();
         }
 
         Transaction t = dao.openSession().beginTransaction();
         Shipper fromDb = dao.getById(s.getId());
-        fromDb.setCompanyName( s.getCompanyName() );
+        // now we should just somehow find out which fields to update and which to leave
+        // would be nice if we could access the query and see which fields were passed in the JSON object
+        fromDb.setFromObject( s, Arrays.asList("companyName") );
         dao.update(fromDb);
         t.commit();
         dao.closeSession();
