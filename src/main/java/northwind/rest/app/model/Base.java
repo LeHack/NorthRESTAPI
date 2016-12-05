@@ -8,7 +8,7 @@ import java.util.List;
  * Class for mapping shippers table.
  */
 public class Base {
-    public <T> void genericSetFromObject(Class<T> cls, T obj, List<String> fields) {
+    protected <T> void genericSetFromObject(Class<T> cls, T obj, List<String> fields) {
         for (String f : fields) {
             Method set, get;
             String fUCfirst = f.substring(0, 1).toUpperCase() + f.substring(1);
