@@ -14,31 +14,21 @@ import northwind.rest.app.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.internal.SessionFactoryImpl;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DaoPerformance {
 
     private static String testDbName;
     private static SessionFactory sFactory;
-    private static Connection dbConn;
     private Session session;
 
     /**
@@ -47,25 +37,12 @@ public class DaoPerformance {
      */
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        // get connection string from hibernate using the session factory
-        sFactory = HibernateUtil.getSessionFactory();
-        Properties props = ((SessionFactoryImpl)sFactory).getProperties();
-        String
-            url  = props.get("hibernate.connection.url").toString(),
-            user = props.get("hibernate.connection.username").toString(),
-            pass = props.get("hibernate.connection.password").toString();
-
-        // create a new temporary test database
         testDbName = "test_northrestapi_db_" + System.currentTimeMillis();
-        String updatedUrl = url.replaceAll("northrest", testDbName);
-        dbConn = DriverManager.getConnection(url, user, pass);
-        Statement statement = dbConn.createStatement();
-        statement.executeUpdate("CREATE DATABASE " + testDbName);
-        importDB(DriverManager.getConnection(updatedUrl, user, pass), "src/main/resources/schema.sql");
+        String dbUrl = Common.createTestDB(testDbName);
         // now update the session factory
         Configuration cfg = new Configuration();
         cfg.configure();
-        cfg.setProperty("hibernate.connection.url", updatedUrl);
+        cfg.setProperty("hibernate.connection.url", dbUrl);
         sFactory = cfg.buildSessionFactory();
     }
 
@@ -73,81 +50,105 @@ public class DaoPerformance {
     public static void tearDownAfterClass() throws Exception {
         // drop test DB
         sFactory.close();
-        Statement statement = dbConn.createStatement();
-        statement.executeUpdate("DROP DATABASE " + testDbName);
-        dbConn.close();
+        Common.dropTestDB(testDbName);
     }
 
     @Before
     public void setUp() {
         session = sFactory.openSession();
-//        session.beginTransaction();
     }
 
     @After
     public void tearDown() {
-//        session.getTransaction().commit();
         session.close();
     }
 
     @Test
-    public void testCategoryDao_createAndRead1000() {
+    public void testCategoryDao_01_create1k() {
+        testCategoryDao_create(1000);
+    }
+
+    @Test
+    public void testCategoryDao_01_read1k() {
+        testCategoryDao_read(1000);
+    }
+
+    @Test
+    public void testCategoryDao_02_create10k() {
+        testCategoryDao_create(10000);
+    }
+
+    @Test
+    public void testCategoryDao_02_read10k() {
+        testCategoryDao_read(10000);
+    }
+
+    private void testCategoryDao_create(long count) {
         CategoryDao dao = new CategoryDao(session);
-        for (int i = 1; i <= 1000; i++) {
+        session.beginTransaction();
+        for (int i = 1; i <= count; i++) {
             Category c = new Category();
             c.setName("Category " + i);
             c.setDescription("Some interesting category, one of a kind!");
             dao.save(c);
         }
+        session.getTransaction().commit();
+    }
 
+    private void testCategoryDao_read(long count) {
+        CategoryDao dao = new CategoryDao(session);
         List<Category> categories = dao.getAll();
         assertNotNull(categories);
-        assertTrue(categories.size() > 1000);
+        assertTrue(categories.size() > count);
     }
 
-    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private Date asDate(String dateStr) {
-        Date date = null;
-        try {
-            date = dateFormat.parse(dateStr);
-        } catch (ParseException e1) {}
-            
-        return date;
+    @Test
+    public void testCustomerDao_01_create1k() {
+        testCustomerDao_create("CustA", 1000);
     }
 
+    @Test
+    public void testCustomerDao_01_read1k() {
+        testCustomerDao_read(1000);
+    }
 
-    private static void importDB(Connection db, String fileName) {
-        String s = new String();
-        StringBuffer sb = new StringBuffer();
+    @Test
+    public void testCustomerDao_02_create10k() {
+        testCustomerDao_create("CustB", 10000);
+    }
 
-        try {
-            FileReader fr = new FileReader(new File(fileName));
-            BufferedReader br = new BufferedReader(fr);
- 
-            while((s = br.readLine()) != null) {
-                // skip comments
-                if (s.startsWith("--"))
-                    continue;
-                sb.append(s);
-            }
-            br.close();
+    @Test
+    public void testCustomerDao_02_read10k() {
+        testCustomerDao_read(10000);
+    }
 
-            // We use ";" as a delimiter for each statement
-            String[] inst = sb.toString().split(";");
-            Statement st = db.createStatement();
+    @Test
+    public void testCustomerDao_03_create100k() {
+        testCustomerDao_create("CustC", 100000);
+    }
 
-            for(int i = 0; i<inst.length; i++) {
-                // we ensure that there is no spaces before or after the request string
-                // in order to not execute empty statements
-                if(!inst[i].trim().equals("")) {
-                    st.executeUpdate(inst[i]);
-                }
-            }
-            // close provided connection
-            db.close();
+    @Test
+    public void testCustomerDao_03_read100k() {
+        testCustomerDao_read(100000);
+    }
+
+    private void testCustomerDao_create(String custPrefix, long count) {
+        CustomerDao dao = new CustomerDao(session);
+        session.beginTransaction();
+        for (int i = 1; i <= count; i++) {
+            Customer c = new Customer();
+            c.setId(custPrefix + i);
+            c.setContactName("Customer " + i);
+            c.setCompanyName("Company " + i);
+            dao.save(c);
         }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
+        session.getTransaction().commit();
+    }
+
+    private void testCustomerDao_read(long count) {
+        CustomerDao dao = new CustomerDao(session);
+        List<Customer> customers = dao.getAll();
+        assertNotNull(customers);
+        assertTrue(customers.size() > count);
     }
 }

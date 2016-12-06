@@ -26,4 +26,8 @@ public class CustomerDao extends BaseDao implements Dao<Customer> {
     public Customer getById(Object id) {
         return getById((String)id);
     }
+
+    public String save(Customer entity) {
+        return (String) getSession().save(entity);
+    }
 }
