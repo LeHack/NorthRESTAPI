@@ -41,6 +41,7 @@
                         <path>/northapi</path>
                         <username>admin</username>
                         <password>admin</password>
+                        <update>true</update>
                     </configuration>
                 </plugin>
             </plugins>
