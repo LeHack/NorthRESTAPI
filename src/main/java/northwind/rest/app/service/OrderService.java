@@ -14,6 +14,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+import org.hibernate.Session;
+
 import java.util.List;
 
 /**
@@ -46,14 +49,13 @@ public class OrderService extends BaseService {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Order> getByCustomer(@PathParam("id")String id) {
         List<Order> orders;
-        CustomerDao cDao = new CustomerDao();
-        cDao.openSession();
-        Customer c = cDao.getById(id);
-        cDao.closeSession();
 
-        dao.openSession();
+        Session s = dao.openSession();
+        CustomerDao cDao = new CustomerDao(s);
+        Customer c = cDao.getById(id);
         orders = ((OrderDao)dao).getByCustomer(c);
         dao.closeSession();
+
         return orders;
     }
 
@@ -62,14 +64,13 @@ public class OrderService extends BaseService {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Order> getByEmployee(@PathParam("id")Integer id) {
         List<Order> orders;
-        EmployeeDao eDao = new EmployeeDao();
-        eDao.openSession();
-        Employee e = eDao.getById(id);
-        eDao.closeSession();
 
-        dao.openSession();
+        Session s = dao.openSession();
+        EmployeeDao eDao = new EmployeeDao(s);
+        Employee e = eDao.getById(id);
         orders = ((OrderDao)dao).getByEmployee(e);
         dao.closeSession();
+
         return orders;
     }
 
@@ -78,14 +79,13 @@ public class OrderService extends BaseService {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Order> getByShipper(@PathParam("id")Integer id) {
         List<Order> orders;
-        ShipperDao sDao = new ShipperDao();
-        sDao.openSession();
-        Shipper s = sDao.getById(id);
-        sDao.closeSession();
 
-        dao.openSession();
+        Session sess = dao.openSession();
+        ShipperDao sDao = new ShipperDao(sess);
+        Shipper s = sDao.getById(id);
         orders = ((OrderDao)dao).getByShipper(s);
         dao.closeSession();
+
         return orders;
     }
 

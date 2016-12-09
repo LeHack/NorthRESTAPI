@@ -16,7 +16,17 @@ import java.util.Map;
 public abstract class BaseDao {
 
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-    private Session session = null;
+    protected Session session = null;
+
+    // allow for using an already open session
+    public BaseDao(Session... s) {
+        if (s.length > 0) {
+            if (!s[0].isOpen()) {
+                throw new RuntimeException("The passed session object does not contain an open session!");
+            }
+            this.session = s[0];
+        }
+    }
 
     public abstract <T> List<T> getAll() throws SessionNotAvailable;
     public <T> List<T> getAll(String tableName, Class<T> contentType) {

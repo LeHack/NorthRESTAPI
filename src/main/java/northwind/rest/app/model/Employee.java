@@ -5,11 +5,12 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Class for mapping customers table.
  */
-public class Employee implements Serializable {
+public class Employee extends Base implements Serializable {
 
     private int id;
     private Integer reportSto;
@@ -171,5 +172,9 @@ public class Employee implements Serializable {
 
     public void setOrders(Collection<Order> orders) {
         this.orders = orders;
+    }
+
+    public void setFromObject(Employee obj, List<String> fields) {
+        super.genericSetFromObject(Employee.class, obj, fields);
     }
 }

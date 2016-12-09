@@ -4,11 +4,12 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Class for mapping customers table.
  */
-public class Customer implements Serializable {
+public class Customer extends Base implements Serializable {
 
     private String id, companyName, contactName, contactTitle, address, city, region, postalCode, country, phone, fax;
     @JsonIgnore
@@ -108,5 +109,9 @@ public class Customer implements Serializable {
 
     public void setOrders(Collection<Order> orders) {
         this.orders = orders;
+    }
+
+    public void setFromObject(Customer obj, List<String> fields) {
+        super.genericSetFromObject(Customer.class, obj, fields);
     }
 }

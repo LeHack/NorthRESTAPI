@@ -3,12 +3,15 @@ package northwind.rest.app.model;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Class for mapping shippers table.
  */
-public class Shipper implements Serializable {
+public class Shipper extends Base implements Serializable {
 
     private Integer id;
     private String companyName, phone;
@@ -45,5 +48,9 @@ public class Shipper implements Serializable {
 
     public void setOrders(Collection<Order> orders) {
         this.orders = orders;
+    }
+
+    public void setFromObject(Shipper obj, List<String> fields) {
+        super.genericSetFromObject(Shipper.class, obj, fields);
     }
 }

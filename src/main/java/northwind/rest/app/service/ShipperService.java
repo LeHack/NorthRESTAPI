@@ -12,8 +12,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.hibernate.Transaction;
+
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -58,5 +61,38 @@ public class ShipperService extends BaseService {
         dao.closeSession();
 
         return Response.created(new URI("/rest/shipper/"+s.getId())).build();
+    }
+
+    @POST
+    @Path("/update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateShipper(Shipper s) throws URISyntaxException {
+        if(s == null){
+            return Response.status(400).entity("Please specify shipper details to update.").build();
+        }
+
+        Transaction t = dao.openSession().beginTransaction();
+        Shipper fromDb = dao.getById(s.getId());
+        // now we should just somehow find out which fields to update and which to leave
+        // would be nice if we could access the query and see which fields were passed in the JSON object
+        fromDb.setFromObject( s, Arrays.asList("companyName") );
+        dao.update(fromDb);
+        t.commit();
+        dao.closeSession();
+
+        return Response.created(new URI("/rest/shipper/"+s.getId())).build();
+    }
+
+    @GET
+    @Path("/delete/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response dropShipper(@PathParam("id")Integer id) throws URISyntaxException {
+        Transaction t = dao.openSession().beginTransaction();
+        Shipper shipper = dao.getById(id);
+        dao.delete(shipper);
+        t.commit();
+        dao.closeSession();
+        return Response.status(200).entity("Shipper: " + id + " deleted from database.").build();
     }
 }

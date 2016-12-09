@@ -1,11 +1,12 @@
 package northwind.rest.app.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Class for mapping order details table.
  */
-public class OrderDetails implements Serializable {
+public class OrderDetails extends Base implements Serializable {
 
     private OrderDetailsPK id;
 
@@ -45,5 +46,9 @@ public class OrderDetails implements Serializable {
 
     public void setDiscount(Double discount) {
         this.discount = discount;
+    }
+
+    public void setFromObject(OrderDetails obj, List<String> fields) {
+        super.genericSetFromObject(OrderDetails.class, obj, fields);
     }
 }

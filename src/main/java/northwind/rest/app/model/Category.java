@@ -4,13 +4,12 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Class for mapping categories table.
  */
-public class Category implements Serializable {
+public class Category extends Base implements Serializable {
 
     private Integer id;
     private String name, description;
@@ -56,5 +55,9 @@ public class Category implements Serializable {
 
     public void setProducts(Collection<Product> products) {
         this.products = products;
+    }
+
+    public void setFromObject(Category obj, List<String> fields) {
+        super.genericSetFromObject(Category.class, obj, fields);
     }
 }

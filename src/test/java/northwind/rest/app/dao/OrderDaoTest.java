@@ -1,21 +1,20 @@
 package northwind.rest.app.dao;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
-import northwind.rest.app.model.Customer;
-import northwind.rest.app.model.Order;
-import northwind.rest.app.model.Employee;
-import northwind.rest.app.model.Shipper;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.Before;
 import org.junit.Test;
+
+import northwind.rest.app.model.Customer;
+import northwind.rest.app.model.Employee;
+import northwind.rest.app.model.Order;
+import northwind.rest.app.model.Shipper;
 
 public class OrderDaoTest {
 
@@ -53,8 +52,8 @@ public class OrderDaoTest {
             order.setEmployee(employee);
             order.setFreight(2.51);
             order.setShipName("special order");
-            order.setOrderDate(asDate("2015-05-25"));
-            order.setShippedDate(asDate("2016-01-02"));
+            order.setOrderDate(Common.asDate("2015-05-25"));
+            order.setShippedDate(Common.asDate("2016-01-02"));
             order.setShipAddress("Somewhere street");
             order.setShipCity("Shiperville");
 
@@ -84,7 +83,7 @@ public class OrderDaoTest {
         Order expectedOrder = null;
         Customer customer = null;
         Employee employee = null;
-        Date shippedDate = asDate("1996-07-16");
+        Date shippedDate = Common.asDate("1996-07-16");
         String shipName = "Vins et alcools Chevalier";
         try {
             session = orderDao.openSession();
@@ -157,8 +156,8 @@ public class OrderDaoTest {
         order.setEmployee(employee);
         order.setFreight(2.51);
         order.setShipName("special order");
-        order.setOrderDate(asDate("2015-05-25"));
-        order.setShippedDate(asDate("2016-01-02"));
+        order.setOrderDate(Common.asDate("2015-05-25"));
+        order.setShippedDate(Common.asDate("2016-01-02"));
         order.setShipAddress("Somewhere street");
         order.setShipCity("Shiperville");
 
@@ -166,16 +165,5 @@ public class OrderDaoTest {
         session.getTransaction().commit();
 
         return id;
-    }
-
-
-    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private Date asDate(String dateStr) {
-        Date date = null;
-        try {
-            date = dateFormat.parse(dateStr);
-        } catch (ParseException e1) {}
-            
-        return date;
     }
 }

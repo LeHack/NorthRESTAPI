@@ -4,13 +4,12 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Class for mapping suppliers table.
  */
-public class Supplier implements Serializable {
+public class Supplier extends Base implements Serializable {
 
     private Integer id;
 
@@ -141,5 +140,9 @@ public class Supplier implements Serializable {
 
     public void setProducts(Collection<Product> products) {
         this.products = products;
+    }
+
+    public void setFromObject(Supplier obj, List<String> fields) {
+        super.genericSetFromObject(Supplier.class, obj, fields);
     }
 }

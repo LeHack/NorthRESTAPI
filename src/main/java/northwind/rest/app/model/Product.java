@@ -1,11 +1,12 @@
 package northwind.rest.app.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Class for mapping products table.
  */
-public class Product implements Serializable {
+public class Product extends Base implements Serializable {
 
     private Integer id;
 
@@ -105,5 +106,9 @@ public class Product implements Serializable {
 
     public void setDiscontinued(Integer discontinued) {
         this.discontinued = discontinued;
+    }
+
+    public void setFromObject(Product obj, List<String> fields) {
+        super.genericSetFromObject(Product.class, obj, fields);
     }
 }
