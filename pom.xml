@@ -57,7 +57,7 @@
     </build>
     <profiles>
         <profile>
-            <id>performance</id>
+            <id>erformance</id>
             <build>
                 <plugins>
                     <plugin>
