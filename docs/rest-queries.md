@@ -13,7 +13,7 @@ curl http://localhost:8080/NorthRESTAPI/rest/shipper/5
 ```
 - Update (single and/or multi field)
 ```
-curl http://localhost:8080/NorthRESTAPI/rest/shipper --data-ascii '{"companyName": "The Other Shipper"}' -H "Content-Type: application/json"
+curl http://localhost:8080/NorthRESTAPI/rest/shipper/update --data-ascii '{"id": 5,"companyName": "The Other Shipper"}' -H "Content-Type: application/json"
 ```
 - Delete
 ```

@@ -12,8 +12,7 @@ import java.util.List;
  */
 public class Employee extends Base implements Serializable {
 
-    private int id;
-    private Integer reportSto;
+    private Integer id, reportSto;
     private String lastName, firstName, title, titleOfCourtesy,
         address, city, region, postalCode, country,
         homePhone, extension, notes, photoPath;
@@ -22,11 +21,11 @@ public class Employee extends Base implements Serializable {
     @JsonIgnore
     private Collection<Order> orders;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

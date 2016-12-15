@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 /**
- * Class for mapping shippers table.
+ * Base class for all models
  */
 public class Base {
     protected <T> void genericSetFromObject(Class<T> cls, T obj, List<String> fields) {
@@ -22,4 +22,6 @@ public class Base {
             }
         }
     }
+
+    public Object getId() { return null; }
 }

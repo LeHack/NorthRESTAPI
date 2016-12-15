@@ -59,13 +59,13 @@ public abstract class BaseDao {
         }
 
         List<T> items = query.list();
-        return (items == null) ? null : items.get(0);
+        return (items.isEmpty() ? null : items.get(0));
     }
 
     public <T> List<T> getByCriteriaAndRestriction(Class<T> tClass, SimpleExpression simpleExpression) {
         Criteria criteria = getSession().createCriteria(tClass).add(simpleExpression);
         List<T> items = criteria.list();
-        return (items == null) ? Collections.emptyList() : items;
+        return (items.isEmpty() ? Collections.emptyList() : items);
     }
 
     public void rollbackTransaction(Transaction transaction, RuntimeException exp) throws RuntimeException {

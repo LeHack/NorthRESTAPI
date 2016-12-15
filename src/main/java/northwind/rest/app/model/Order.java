@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Order extends Base implements Serializable {
 
-    private int id;
+    private Integer id;
     private Customer customer;
     private Employee employee;
     private Shipper shipVia;
@@ -17,11 +17,11 @@ public class Order extends Base implements Serializable {
     private Double freight;
     private String shipName, shipAddress, shipCity, shipRegion, shipPostalCode, shipCountry;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

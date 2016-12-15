@@ -120,7 +120,7 @@ public class OrderDaoTest {
         Transaction transaction = null;
 
         Order order = null;
-        int existingOrderId = persistTestOrder();
+        Integer existingOrderId = persistTestOrder();
         try {
             session = orderDao.openSession();
             transaction = session.beginTransaction();
