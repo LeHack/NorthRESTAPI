@@ -8,6 +8,8 @@ import northwind.rest.app.model.Product;
 import northwind.rest.app.model.Shipper;
 import northwind.rest.app.model.Supplier;
 import northwind.rest.app.util.HibernateUtil;
+import northwind.rest.app.util.ListUtil;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.junit.After;
@@ -36,7 +38,7 @@ public class DaoTest {
     public void testCategoryDao_shouldReturnAllRows() {
         String hql = "from Category";
         Query query = session.createQuery(hql);
-        List<Category> categories = query.list();
+        List<Category> categories = ListUtil.castList(Category.class, query.list());
 
         Assert.assertNotNull(categories);
     }
@@ -45,7 +47,7 @@ public class DaoTest {
     public void testSupplierDao_shouldReturnAllRows() {
         String hql = "from Supplier";
         Query query = session.createQuery(hql);
-        List<Supplier> suppliers = query.list();
+        List<Supplier> suppliers = ListUtil.castList(Supplier.class, query.list());
 
         Assert.assertNotNull(suppliers);
     }
@@ -54,7 +56,7 @@ public class DaoTest {
     public void testProductDao_shouldReturnAllRows() {
         String hql = "from Product";
         Query query = session.createQuery(hql);
-        List<Product> products = query.list();
+        List<Product> products = ListUtil.castList(Product.class, query.list());
 
         Assert.assertNotNull(products);
     }
@@ -63,7 +65,7 @@ public class DaoTest {
     public void testEmployeesDao_shouldReturnAllRows() {
         String hql = "from Employee";
         Query query = session.createQuery(hql);
-        List<Employee> employees = query.list();
+        List<Employee> employees = ListUtil.castList(Employee.class, query.list());
 
         Assert.assertNotNull(employees);
     }
@@ -72,7 +74,7 @@ public class DaoTest {
     public void testOrdersDao_shouldReturnAllRows() {
         String hql = "from Order";
         Query query = session.createQuery(hql);
-        List<Order> orders = query.list();
+        List<Order> orders = ListUtil.castList(Order.class, query.list());
 
         Assert.assertNotNull(orders);
     }
@@ -81,7 +83,7 @@ public class DaoTest {
     public void testCustomersDao_shouldReturnAllRows() {
         String hql = "from Customer";
         Query query = session.createQuery(hql);
-        List<Customer> customers = query.list();
+        List<Customer> customers = ListUtil.castList(Customer.class, query.list());
 
         Assert.assertNotNull(customers);
     }
@@ -90,7 +92,7 @@ public class DaoTest {
     public void testShippersDao_shouldReturnAllRows() {
         String hql = "from Shipper";
         Query query = session.createQuery(hql);
-        List<Shipper> shippers = query.list();
+        List<Shipper> shippers = ListUtil.castList(Shipper.class, query.list());
 
         Assert.assertNotNull(shippers);
     }

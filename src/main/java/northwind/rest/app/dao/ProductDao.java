@@ -9,20 +9,22 @@ import org.hibernate.Session;
 /**
  * DAO layer for products.
  */
-public class ProductDao extends BaseDao implements Dao<Product> {
+public class ProductDao extends BaseDao<Product> implements Dao<Product> {
     public ProductDao(Session... s) {
-        super(s);
+        super(Product.class, s);
     }
 
+    @Override
     public List<Product> getAll() {
-        return getAll("Product", Product.class);
+        return getAll("Product");
     }
 
     @Override
     public Product getById(Integer id) {
-        return getById(Product.class, id);
+        return getById(id);
     }
 
+    @Override
     public Product getById(Object id) {
         return getById((Integer)id);
     }

@@ -4,12 +4,11 @@ import static org.junit.Assert.*;
 
 import northwind.rest.app.model.Category;
 import northwind.rest.app.model.Customer;
-import northwind.rest.app.model.Employee;
-import northwind.rest.app.model.Order;
-import northwind.rest.app.model.Product;
-import northwind.rest.app.model.Shipper;
-import northwind.rest.app.model.Supplier;
-import northwind.rest.app.util.HibernateUtil;
+//import northwind.rest.app.model.Employee;
+//import northwind.rest.app.model.Order;
+//import northwind.rest.app.model.Product;
+//import northwind.rest.app.model.Shipper;
+//import northwind.rest.app.model.Supplier;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

@@ -7,6 +7,7 @@ import java.util.List;
  * Class for mapping products table.
  */
 public class Product extends Base implements Serializable {
+    private static final long serialVersionUID = -5719595325868681083L;
 
     private Integer id;
 

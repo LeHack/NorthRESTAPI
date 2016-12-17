@@ -8,6 +8,7 @@ import java.util.List;
  * Class for mapping orders table.
  */
 public class Order extends Base implements Serializable {
+    private static final long serialVersionUID = -8424285625793583177L;
 
     private Integer id;
     private Customer customer;

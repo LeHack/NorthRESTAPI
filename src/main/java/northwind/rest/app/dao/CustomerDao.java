@@ -9,25 +9,23 @@ import org.hibernate.Session;
 /**
  * DAO layer for customers.
  */
-public class CustomerDao extends BaseDao implements Dao<Customer> {
+public class CustomerDao extends BaseDao<Customer> implements Dao<Customer> {
     public CustomerDao(Session... s) {
-        super(s);
+        super(Customer.class, String.class, s);
     }
 
+    @Override
     public List<Customer> getAll() {
-        return getAll("Customer", Customer.class);
+        return getAll("Customer");
     }
 
     @Override
     public Customer getById(String id) {
-        return getById(Customer.class, id);
+        return getById(id);
     }
 
+    @Override
     public Customer getById(Object id) {
         return getById((String)id);
-    }
-
-    public String save(Customer entity) {
-        return (String) getSession().save(entity);
     }
 }

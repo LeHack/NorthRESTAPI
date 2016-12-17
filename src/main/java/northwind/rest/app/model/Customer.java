@@ -10,6 +10,7 @@ import java.util.List;
  * Class for mapping customers table.
  */
 public class Customer extends Base implements Serializable {
+    private static final long serialVersionUID = 7640214729358632360L;
 
     private String id, companyName, contactName, contactTitle, address, city, region, postalCode, country, phone, fax;
     @JsonIgnore

@@ -21,7 +21,7 @@ import java.util.List;
  * url: /rest/shipper/*
  */
 @Path("/shipper")
-public class ShipperService extends BaseService {
+public class ShipperService extends BaseService<Shipper> {
     public ShipperService() {
         dao = new ShipperDao();
     }
@@ -30,14 +30,14 @@ public class ShipperService extends BaseService {
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Shipper> getAll() {
-        return super.getAll();
+        return getAllObjects();
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Shipper getOne(@PathParam("id")Integer id) {
-        return super.getOne(id);
+        return getSingleObject(id);
     }
 
     @POST

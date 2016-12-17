@@ -9,20 +9,22 @@ import org.hibernate.Session;
 /**
  * DAO layer for employees.
  */
-public class EmployeeDao extends BaseDao implements Dao<Employee> {
+public class EmployeeDao extends BaseDao<Employee> implements Dao<Employee> {
     public EmployeeDao(Session... s) {
-        super(s);
+        super(Employee.class, s);
     }
 
+    @Override
     public List<Employee> getAll() {
-        return getAll("Employee", Employee.class);
+        return getAll("Employee");
     }
 
     @Override
     public Employee getById(Integer id) {
-        return getById(Employee.class, id);
+        return getById(id);
     }
 
+    @Override
     public Employee getById(Object id) {
         return getById((Integer)id);
     }

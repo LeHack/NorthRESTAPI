@@ -10,6 +10,7 @@ import java.util.List;
  * Class for mapping shippers table.
  */
 public class Shipper extends Base implements Serializable {
+    private static final long serialVersionUID = 8706184509736149305L;
 
     private Integer id;
     private String companyName, phone;

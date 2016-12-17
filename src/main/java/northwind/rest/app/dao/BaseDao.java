@@ -1,6 +1,9 @@
 package northwind.rest.app.dao;
 
+import northwind.rest.app.exceptions.SessionNotAvailable;
 import northwind.rest.app.util.HibernateUtil;
+import northwind.rest.app.util.ListUtil;
+
 import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.SimpleExpression;
@@ -13,13 +16,26 @@ import java.util.Map;
 /**
  * DAO base object.
  */
-public abstract class BaseDao {
+public abstract class BaseDao<T> {
+    final Class<T> usedClass;
+    final Class<?> idType;
 
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
     protected Session session = null;
 
+    public BaseDao(Class<T> cls, Class<?> idCls) {
+        this.usedClass = cls;
+        this.idType    = idCls;
+    }
+
+    // Default save return type is Integer
+    public BaseDao(Class<T> cls, Session... s) {
+        this(cls, Integer.class, s);
+    }
+
     // allow for using an already open session
-    public BaseDao(Session... s) {
+    public BaseDao(Class<T> cls, Class<?> idCls, Session... s) {
+        this(cls, idCls);
         if (s.length > 0) {
             if (!s[0].isOpen()) {
                 throw new RuntimeException("The passed session object does not contain an open session!");
@@ -28,14 +44,14 @@ public abstract class BaseDao {
         }
     }
 
-    public abstract <T> List<T> getAll() throws SessionNotAvailable;
-    public <T> List<T> getAll(String tableName, Class<T> contentType) {
+    public abstract List<T> getAll();
+    public List<T> getAll(String tableName) {
         Session session = getSession();
         session.beginTransaction();
 
         String hql = "from " + tableName;
         Query query = session.createQuery(hql);
-        List<T> items = query.list();
+        List<T> items = ListUtil.castList(this.usedClass, query.list());
 
         session.getTransaction().commit();
 
@@ -45,26 +61,26 @@ public abstract class BaseDao {
         return items;
     }
 
-    public <T> T getById(Integer id) { T o = null; return o; };
-    public <T> T getById(String id)  { T o = null; return o; };
-    public <T> T getById(Class<T> cls, Object id) {
-        List<T> objects = getByCriteriaAndRestriction( cls, Restrictions.eq("id", id) );
+    public T getById(Integer id) { T o = null; return o; };
+    public T getById(String id)  { T o = null; return o; };
+    public T getById(Object id) {
+        List<T> objects = getByCriteriaAndRestriction( Restrictions.eq("id", id) );
         return (objects.isEmpty() ? null : objects.get(0));
     }
 
-    public <T> T getByNamedQueryAndParam(String namedQuery, HashMap<String, Object> params) {
+    public T getByNamedQueryAndParam(String namedQuery, HashMap<String, Object> params) {
         Query query = getSession().getNamedQuery(namedQuery);
         for (Map.Entry<String, Object> param : params.entrySet()) {
             query.setParameter(param.getKey(), param.getValue());
         }
 
-        List<T> items = query.list();
+        List<T> items = ListUtil.castList(this.usedClass, query.list());
         return (items.isEmpty() ? null : items.get(0));
     }
 
-    public <T> List<T> getByCriteriaAndRestriction(Class<T> tClass, SimpleExpression simpleExpression) {
-        Criteria criteria = getSession().createCriteria(tClass).add(simpleExpression);
-        List<T> items = criteria.list();
+    public List<T> getByCriteriaAndRestriction(SimpleExpression simpleExpression) {
+        Criteria criteria = getSession().createCriteria(this.usedClass).add(simpleExpression);
+        List<T> items = ListUtil.castList(this.usedClass, criteria.list());
         return (items.isEmpty() ? Collections.emptyList() : items);
     }
 
@@ -77,15 +93,16 @@ public abstract class BaseDao {
         throw exp;
     }
 
-    public <T> Integer save(T entity) {
-        return (Integer) getSession().save(entity);
+    @SuppressWarnings("unchecked")
+    public <idCls> idCls save(T entity) {
+        return (idCls) getSession().save(entity);
     }
 
-    public <T> void update(T entity) {
+    public void update(T entity) {
         getSession().saveOrUpdate(entity);
     }
 
-    public <T> void delete(T entity) {
+    public void delete(T entity) {
         getSession().delete(entity);
     }
 
@@ -107,6 +124,4 @@ public abstract class BaseDao {
             throw new SessionNotAvailable();
         return session;
     }
-
-    public class SessionNotAvailable extends RuntimeException {}
 }

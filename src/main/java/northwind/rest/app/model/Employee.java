@@ -11,6 +11,7 @@ import java.util.List;
  * Class for mapping customers table.
  */
 public class Employee extends Base implements Serializable {
+    private static final long serialVersionUID = 34850457714971133L;
 
     private Integer id, reportSto;
     private String lastName, firstName, title, titleOfCourtesy,

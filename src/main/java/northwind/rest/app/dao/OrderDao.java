@@ -14,20 +14,22 @@ import java.util.List;
 /**
  * DAO layer for orders.
  */
-public class OrderDao extends BaseDao implements Dao<Order> {
+public class OrderDao extends BaseDao<Order> implements Dao<Order> {
     public OrderDao(Session... s) {
-        super(s);
+        super(Order.class, s);
     }
 
+    @Override
     public List<Order> getAll() {
-        return getAll("Order", Order.class);
+        return getAll("Order");
     }
 
     @Override
     public Order getById(Integer id) {
-        return getById(Order.class, id);
+        return getById(id);
     }
 
+    @Override
     public Order getById(Object id) {
         return getById((Integer)id);
     }
@@ -45,6 +47,6 @@ public class OrderDao extends BaseDao implements Dao<Order> {
     }
 
     private List<Order> getBy(SimpleExpression r) {
-        return getByCriteriaAndRestriction( Order.class, r );
+        return getByCriteriaAndRestriction( r );
     }
 }

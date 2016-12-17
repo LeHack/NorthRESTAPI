@@ -2,9 +2,8 @@ package northwind.rest.app.dao;
 
 import northwind.rest.app.model.Order;
 import northwind.rest.app.model.OrderDetails;
+import northwind.rest.app.util.ListUtil;
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,13 +29,14 @@ public class SearchTest {
         Date startDate = formatter.parse("1996-07-01");
         Date endDate = formatter.parse("1997-01-01");
 
-        List<Order> orders = orderDao.openSession().createCriteria(Order.class)
-                        .add(Restrictions.in("shipCountry",
-                                new String[]{"France", "Germany", "Switzerland"}))
-                        .add(Restrictions.ge("orderDate", startDate))
-                        .add(Restrictions.le("orderDate", endDate))
-                        .addOrder(org.hibernate.criterion.Order.asc("shippedDate"))
-                        .list();
+        List<Order> orders = ListUtil.castList(Order.class,
+            orderDao.openSession().createCriteria(Order.class)
+                .add(Restrictions.in("shipCountry", Arrays.asList("France", "Germany", "Switzerland")))
+                .add(Restrictions.ge("orderDate", startDate))
+                .add(Restrictions.le("orderDate", endDate))
+                .addOrder(org.hibernate.criterion.Order.asc("shippedDate"))
+                .list()
+        );
 
         Assert.assertNotNull(orders);
 
@@ -60,17 +60,21 @@ public class SearchTest {
         SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd");
         Date startDate = formatter.parse("1996-07-01");
 
-        List<Order> orders = orderDao.openSession().createCriteria(Order.class)
-                            .add(Restrictions.gt("shippedDate", startDate))
-                            .createCriteria("customer")
-                                .add(Restrictions.or(
-                                        Restrictions.and(Restrictions.like("contactTitle", "%Manager%"),
-                                                Restrictions.in("city", new String[]{"Reims", "London"})),
-                                        Restrictions.and(Restrictions.like("contactTitle", "%Owner%"),
-                                                Restrictions.in("city", new String[]{"Madrid", "Paris"})))
-                                )
-                            .addOrder(org.hibernate.criterion.Order.asc("contactTitle"))
-                            .list();
+        List<Order> orders = ListUtil.castList(Order.class,
+            orderDao.openSession().createCriteria(Order.class)
+                .add(Restrictions.gt("shippedDate", startDate))
+                .createCriteria("customer")
+                .add(Restrictions.or(
+                    Restrictions.and(
+                        Restrictions.like("contactTitle", "%Manager%"),
+                        Restrictions.in("city", Arrays.asList("Reims", "London"))),
+                    Restrictions.and(
+                        Restrictions.like("contactTitle", "%Owner%"),
+                        Restrictions.in("city", Arrays.asList("Madrid", "Paris"))))
+                )
+                .addOrder(org.hibernate.criterion.Order.asc("contactTitle"))
+                .list()
+        );
 
         Assert.assertNotNull(orders);
         System.out.println("Found orders: " + orders.size());
@@ -84,13 +88,13 @@ public class SearchTest {
      */
     @Test
     public void findOrderWithConditionByQuantityAndCountry() throws Exception {
-        Session session = orderDao.openSession();
-        Criteria criteria = session.createCriteria(Order.class);
-        List<Order> orders = orderDao.openSession().createCriteria(OrderDetails.class)
+        List<OrderDetails> orders = ListUtil.castList(OrderDetails.class,
+            orderDao.openSession().createCriteria(OrderDetails.class)
                 .add(Restrictions.gt("quantity", 50))
 //                .createCriteria("id.order.customer")
 //                .add(Restrictions.eq("country", "UK"))
-                .list();
+                .list()
+        );
 
         Assert.assertFalse(orders.isEmpty());
         System.out.println("Found orders: " + orders.size());

@@ -10,13 +10,14 @@ import org.hibernate.Session;
 /**
  * DAO layer for shippers.
  */
-public class ShipperDao extends BaseDao implements Dao<Shipper> {
+public class ShipperDao extends BaseDao<Shipper> implements Dao<Shipper> {
     public ShipperDao(Session... s) {
-        super(s);
+        super(Shipper.class, s);
     }
 
+    @Override
     public List<Shipper> getAll() {
-        return getAll("Shipper", Shipper.class);
+        return getAll("Shipper");
     }
 
     @Override
@@ -26,6 +27,7 @@ public class ShipperDao extends BaseDao implements Dao<Shipper> {
         return getByNamedQueryAndParam("findShipperById", params);
     }
 
+    @Override
     public Shipper getById(Object id) {
         return getById((Integer)id);
     }

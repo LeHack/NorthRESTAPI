@@ -2,7 +2,7 @@ package northwind.rest.app.dao;
 
 import java.util.List;
 
-import northwind.rest.app.dao.BaseDao.SessionNotAvailable;
+import northwind.rest.app.exceptions.SessionNotAvailable;
 
 /**
  * Common interface for all DAO objects.

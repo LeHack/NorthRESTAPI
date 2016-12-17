@@ -12,7 +12,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -22,7 +21,7 @@ import java.util.List;
  * url: /rest/category/*
  */
 @Path("/category")
-public class CategoryService extends BaseService {
+public class CategoryService extends BaseService<Category> {
     public CategoryService() {
         dao = new CategoryDao();
     }
@@ -31,32 +30,35 @@ public class CategoryService extends BaseService {
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Category> getAll() {
-        return super.getAll();
+        return getAllObjects();
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Category getOne(@PathParam("id")Integer id) {
-        return super.getOne(id);
+        return getSingleObject(id);
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response newCategory( Category c ) throws URISyntaxException {
-        if(c == null){
-            return Response.status(400).entity("Please add category details.").build();
-        }
+    public Response createNew( Category cat ) throws URISyntaxException {
+        return super.createNew(cat);
+    }
 
-        if(c.getName() == null) {
-            return Response.status(400).entity("Please provide the category name.").build();
-        }
+    @POST
+    @Path("/update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response update(Category cat) throws URISyntaxException {
+        return super.updateObject(cat);
+    }
 
-        dao.openSession();
-        dao.save(c);
-        dao.closeSession();
-
-        return Response.created(new URI("/rest/category/"+c.getId())).build();
+    @GET
+    @Path("/delete/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response drop(@PathParam("id")Integer id) throws URISyntaxException {
+        return super.dropObject(id);
     }
 }

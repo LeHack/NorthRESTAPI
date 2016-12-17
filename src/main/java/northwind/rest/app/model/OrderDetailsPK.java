@@ -8,9 +8,9 @@ import java.io.Serializable;
  * Needs to override equals and hashcode!
  */
 public class OrderDetailsPK implements Serializable {
+    private static final long serialVersionUID = 3928892914741641807L;
 
     private Order order;
-
     private Product product;
 
     @Override

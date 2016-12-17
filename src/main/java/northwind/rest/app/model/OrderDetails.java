@@ -7,14 +7,11 @@ import java.util.List;
  * Class for mapping order details table.
  */
 public class OrderDetails extends Base implements Serializable {
+    private static final long serialVersionUID = 6864114539631709169L;
 
     private OrderDetailsPK id;
-
-    private Double unitPrice;
-
+    private Double unitPrice, discount;
     private Integer quantity;
-
-    private Double discount;
 
     public OrderDetailsPK getId() {
         return id;

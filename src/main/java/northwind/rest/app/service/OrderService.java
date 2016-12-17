@@ -9,14 +9,18 @@ import northwind.rest.app.model.Employee;
 import northwind.rest.app.model.Order;
 import northwind.rest.app.model.Shipper;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.hibernate.Session;
 
+import java.net.URISyntaxException;
 import java.util.List;
 
 /**
@@ -25,7 +29,7 @@ import java.util.List;
  * url: /rest/order/*
  */
 @Path("/order")
-public class OrderService extends BaseService {
+public class OrderService extends BaseService<Order> {
     public OrderService() {
         dao = new OrderDao();
     }
@@ -34,14 +38,14 @@ public class OrderService extends BaseService {
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Order> getAll() {
-        return super.getAll();
+        return getAllObjects();
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Order getOne(@PathParam("id")Integer id) {
-        return super.getOne(id);
+        return getSingleObject(id);
     }
 
     @GET
@@ -89,4 +93,25 @@ public class OrderService extends BaseService {
         return orders;
     }
 
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createNew( Order o ) throws URISyntaxException {
+        return super.createNew(o);
+    }
+
+    @POST
+    @Path("/update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response update(Order o) throws URISyntaxException {
+        return super.updateObject(o);
+    }
+
+    @GET
+    @Path("/delete/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response drop(@PathParam("id")Integer id) throws URISyntaxException {
+        return super.dropObject(id);
+    }
 }

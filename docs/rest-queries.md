@@ -2,25 +2,25 @@
 
 ## CRUD
 
-- Create
+- Create (POST)
 ```
 curl http://localhost:8080/NorthRESTAPI/rest/shipper --data-ascii '{"companyName": "The Shipper", "phone": "123-456-789"}' -H "Content-Type: application/json"
 ```
-- Read
+- Read (GET)
 ```
 curl http://localhost:8080/NorthRESTAPI/rest/shipper/all
 curl http://localhost:8080/NorthRESTAPI/rest/shipper/5
 ```
-- Update (single and/or multi field)
+- Update (POST)
 ```
 curl http://localhost:8080/NorthRESTAPI/rest/shipper/update --data-ascii '{"id": 5,"companyName": "The Other Shipper"}' -H "Content-Type: application/json"
 ```
-- Delete
+- Delete (GET)
 ```
 curl http://localhost:8080/NorthRESTAPI/rest/shipper/delete/5
 ```
 
-## Proste raporty
+## Wyszukiwanie po kluczu obcym (GET)
 
 - Pokaż wszystkie zamówienia dla pracownika o Id: 5
 ```
@@ -35,4 +35,9 @@ curl http://localhost:8080/NorthRESTAPI/rest/order/shipper/2
 - Pokaż wszystkie zamówienia dla klienta o Id: QUICK
 ```
 curl http://localhost:8080/NorthRESTAPI/rest/order/customer/QUICK
+```
+
+## Stworzenie nowego zamówienia (POST)
+```
+curl http://localhost:8080/NorthRESTAPI/rest/order --data-ascii '' -H "Content-Type: application/json"
 ```

@@ -10,6 +10,7 @@ import java.util.List;
  * Class for mapping suppliers table.
  */
 public class Supplier extends Base implements Serializable {
+    private static final long serialVersionUID = 3015403319206191170L;
 
     private Integer id;
 

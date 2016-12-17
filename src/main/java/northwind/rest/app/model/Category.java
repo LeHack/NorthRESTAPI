@@ -10,6 +10,7 @@ import java.util.List;
  * Class for mapping categories table.
  */
 public class Category extends Base implements Serializable {
+    private static final long serialVersionUID = -818685489120626785L;
 
     private Integer id;
     private String name, description;

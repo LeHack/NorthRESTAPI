@@ -9,20 +9,22 @@ import org.hibernate.Session;
 /**
  * DAO layer for suppliers.
  */
-public class SupplierDao extends BaseDao implements Dao<Supplier> {
+public class SupplierDao extends BaseDao<Supplier> implements Dao<Supplier> {
     public SupplierDao(Session... s) {
-        super(s);
+        super(Supplier.class, s);
     }
 
+    @Override
     public List<Supplier> getAll() {
-        return getAll("Supplier", Supplier.class);
+        return getAll("Supplier");
     }
 
     @Override
     public Supplier getById(Integer id) {
-        return getById(Supplier.class, id);
+        return getById(id);
     }
 
+    @Override
     public Supplier getById(Object id) {
         return getById((Integer)id);
     }
