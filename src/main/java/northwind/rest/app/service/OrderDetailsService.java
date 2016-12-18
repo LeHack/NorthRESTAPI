@@ -29,9 +29,22 @@ public class OrderDetailsService extends BaseService<OrderDetails> {
     }
 
     @GET
-    @Path("{id}")
+    @Path("/order/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public OrderDetails getOne(@PathParam("id")Integer id) {
-        return getSingleObject(id);
+    public List<OrderDetails> getByOrder(@PathParam("id")Integer id) {
+        dao.openSession();
+        List<OrderDetails> obj = ((OrderDetailsDao)dao).getByOrderId(id);
+        dao.closeSession();
+        return obj;
+    }
+
+    @GET
+    @Path("/product/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<OrderDetails> getByProduct(@PathParam("id")Integer id) {
+        dao.openSession();
+        List<OrderDetails> obj = ((OrderDetailsDao)dao).getByProductId(id);
+        dao.closeSession();
+        return obj;
     }
 }

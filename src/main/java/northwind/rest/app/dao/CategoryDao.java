@@ -20,7 +20,7 @@ public class CategoryDao extends BaseDao<Category> implements Dao<Category> {
     }
 
     @Override
-    public Category getById(Integer id) {
-        return getById(id);
+    public Category getById(Object id) {
+        return getByIdInternal(id);
     }
 }

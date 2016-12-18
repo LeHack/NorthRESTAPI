@@ -20,12 +20,7 @@ public class CustomerDao extends BaseDao<Customer> implements Dao<Customer> {
     }
 
     @Override
-    public Customer getById(String id) {
-        return getById(id);
-    }
-
-    @Override
     public Customer getById(Object id) {
-        return getById((String)id);
+        return getByIdInternal(id);
     }
 }

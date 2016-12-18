@@ -44,7 +44,7 @@ public class BaseService<T> {
 
     public Response createNew( T obj ) throws URISyntaxException {
         if(obj == null){
-            return Response.status(400).entity("Please specify object to be created.").build();
+            return Response.status(400).entity("Please specify object to be created.\n").build();
         }
 
         Response r = validateNewObject(obj);
@@ -56,19 +56,19 @@ public class BaseService<T> {
         dao.save(obj);
         dao.closeSession();
 
-        return Response.status(200).entity("Object created OK.").build();
+        return Response.status(200).entity("Object created OK.\n").build();
     }
 
     public Response updateObject( T obj ) throws URISyntaxException {
         if(obj == null) {
-            return Response.status(400).entity("Please specify details to update.").build();
+            return Response.status(400).entity("Please specify details to update.\n").build();
         }
         else if (((Base)obj).getId() == null) {
-            return Response.status(400).entity("You need to pass the id of the object to update.").build();
+            return Response.status(400).entity("You need to pass the id of the object to update.\n").build();
         }
 
         // check if this object is present in DB
-        Response r = Response.status(200).entity("Object updated OK.").build();
+        Response r = Response.status(200).entity("Object updated OK.\n").build();
         Transaction t = dao.openSession().beginTransaction();
         T fromDb = (T)dao.getById(((Base)obj).getId());
         if (fromDb != null) {
@@ -77,7 +77,7 @@ public class BaseService<T> {
         }
         else {
             t.rollback();
-            r = Response.status(400).entity("The object does not exist in DB.").build();
+            r = Response.status(400).entity("The object does not exist in DB.\n").build();
         }
         dao.closeSession();
 
@@ -85,7 +85,7 @@ public class BaseService<T> {
     }
 
     public Response dropObject(@PathParam("id")Integer id) throws URISyntaxException {
-        Response r = Response.status(200).entity("Object removed OK.").build();
+        Response r = Response.status(200).entity("Object removed OK.\n").build();
         Transaction t = dao.openSession().beginTransaction();
         T obj = dao.getById(id);
         if (obj != null) {
@@ -94,7 +94,7 @@ public class BaseService<T> {
         }
         else {
             t.rollback();
-            r = Response.status(400).entity("The object does not exist in DB.").build();
+            r = Response.status(400).entity("The object does not exist in DB.\n").build();
         }
         dao.closeSession();
         return r;

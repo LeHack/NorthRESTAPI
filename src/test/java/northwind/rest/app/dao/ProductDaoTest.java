@@ -69,23 +69,24 @@ public class ProductDaoTest {
         Session session = null;
         Transaction transaction = null;
 
+        int testProductId = 71;
         Product product = null;
         Product expectedProduct = null;
-        String name = "Update product nr 70";
+        String name = "Update product nr 71";
         Double price = 245435.99;
         Integer discontinued = 1;
         try {
             session = productDao.openSession();
             transaction = session.beginTransaction();
 
-            product = session.get(Product.class, 70);
+            product = session.get(Product.class, testProductId);
             product.setName(name);
             product.setDiscontinued(discontinued);
             product.setUnitPrice(price);
 
             transaction.commit();
 
-            expectedProduct = session.get(Product.class, 70);
+            expectedProduct = session.get(Product.class, testProductId);
 
         } catch (RuntimeException re) {
             productDao.rollbackTransaction(transaction, re);

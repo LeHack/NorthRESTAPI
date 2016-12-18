@@ -20,12 +20,7 @@ public class ProductDao extends BaseDao<Product> implements Dao<Product> {
     }
 
     @Override
-    public Product getById(Integer id) {
-        return getById(id);
-    }
-
-    @Override
     public Product getById(Object id) {
-        return getById((Integer)id);
+        return getByIdInternal(id);
     }
 }

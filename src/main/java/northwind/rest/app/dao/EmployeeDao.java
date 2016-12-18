@@ -20,12 +20,7 @@ public class EmployeeDao extends BaseDao<Employee> implements Dao<Employee> {
     }
 
     @Override
-    public Employee getById(Integer id) {
-        return getById(id);
-    }
-
-    @Override
     public Employee getById(Object id) {
-        return getById((Integer)id);
+        return getByIdInternal(id);
     }
 }

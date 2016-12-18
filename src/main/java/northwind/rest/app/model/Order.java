@@ -3,6 +3,7 @@ package northwind.rest.app.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class for mapping orders table.
@@ -152,5 +153,9 @@ public class Order extends Base implements Serializable {
 
     public void setFromObject(Order obj, List<String> fields) {
         super.genericSetFromObject(Order.class, obj, fields);
+    }
+
+    public void setFromMap(Map<String, Object> map) {
+        super.genericSetFromMap(Order.class, map);
     }
 }

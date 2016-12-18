@@ -61,11 +61,14 @@ public abstract class BaseDao<T> {
         return items;
     }
 
-    public T getById(Integer id) { T o = null; return o; };
-    public T getById(String id)  { T o = null; return o; };
-    public T getById(Object id) {
+    public abstract T getById(Object id);
+    protected T getByIdInternal(Object id) {
         List<T> objects = getByCriteriaAndRestriction( Restrictions.eq("id", id) );
         return (objects.isEmpty() ? null : objects.get(0));
+    }
+
+    protected List<T> getBy(SimpleExpression r) {
+        return getByCriteriaAndRestriction( r );
     }
 
     public T getByNamedQueryAndParam(String namedQuery, HashMap<String, Object> params) {

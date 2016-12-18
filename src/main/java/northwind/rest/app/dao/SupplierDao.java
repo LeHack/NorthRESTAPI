@@ -20,12 +20,7 @@ public class SupplierDao extends BaseDao<Supplier> implements Dao<Supplier> {
     }
 
     @Override
-    public Supplier getById(Integer id) {
-        return getById(id);
-    }
-
-    @Override
     public Supplier getById(Object id) {
-        return getById((Integer)id);
+        return getByIdInternal(id);
     }
 }

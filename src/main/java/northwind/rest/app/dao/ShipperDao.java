@@ -21,14 +21,9 @@ public class ShipperDao extends BaseDao<Shipper> implements Dao<Shipper> {
     }
 
     @Override
-    public Shipper getById(Integer id) {
+    public Shipper getById(Object id) {
         HashMap<String, Object> params = new HashMap<>();
         params.put("shipperId", id);
         return getByNamedQueryAndParam("findShipperById", params);
-    }
-
-    @Override
-    public Shipper getById(Object id) {
-        return getById((Integer)id);
     }
 }

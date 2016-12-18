@@ -7,7 +7,6 @@ import northwind.rest.app.model.Shipper;
 
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.SimpleExpression;
 
 import java.util.List;
 
@@ -25,13 +24,8 @@ public class OrderDao extends BaseDao<Order> implements Dao<Order> {
     }
 
     @Override
-    public Order getById(Integer id) {
-        return getById(id);
-    }
-
-    @Override
     public Order getById(Object id) {
-        return getById((Integer)id);
+        return getByIdInternal(id);
     }
 
     public List<Order> getByCustomer(Customer c) {
@@ -44,9 +38,5 @@ public class OrderDao extends BaseDao<Order> implements Dao<Order> {
 
     public List<Order> getByShipper(Shipper s) {
         return getBy(Restrictions.eq("shipVia", s));
-    }
-
-    private List<Order> getBy(SimpleExpression r) {
-        return getByCriteriaAndRestriction( r );
     }
 }

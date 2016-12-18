@@ -2,6 +2,7 @@ package northwind.rest.app.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class for mapping order details table.
@@ -10,7 +11,7 @@ public class OrderDetails extends Base implements Serializable {
     private static final long serialVersionUID = 6864114539631709169L;
 
     private OrderDetailsPK id;
-    private Double unitPrice, discount;
+    private Float unitPrice, discount;
     private Integer quantity;
 
     public OrderDetailsPK getId() {
@@ -21,11 +22,11 @@ public class OrderDetails extends Base implements Serializable {
         this.id = id;
     }
 
-    public Double getUnitPrice() {
+    public Float getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(Double unitPrice) {
+    public void setUnitPrice(Float unitPrice) {
         this.unitPrice = unitPrice;
     }
 
@@ -37,15 +38,19 @@ public class OrderDetails extends Base implements Serializable {
         this.quantity = quantity;
     }
 
-    public Double getDiscount() {
+    public Float getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Double discount) {
+    public void setDiscount(Float discount) {
         this.discount = discount;
     }
 
     public void setFromObject(OrderDetails obj, List<String> fields) {
         super.genericSetFromObject(OrderDetails.class, obj, fields);
+    }
+
+    public void setFromMap(Map<String, Object> map) {
+        super.genericSetFromMap(OrderDetails.class, map);
     }
 }

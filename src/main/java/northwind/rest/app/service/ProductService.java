@@ -1,6 +1,8 @@
 package northwind.rest.app.service;
 
+import northwind.rest.app.dao.OrderDetailsDao;
 import northwind.rest.app.dao.ProductDao;
+import northwind.rest.app.model.OrderDetails;
 import northwind.rest.app.model.Product;
 
 import javax.ws.rs.Consumes;
@@ -11,6 +13,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.hibernate.Transaction;
 
 import java.net.URISyntaxException;
 import java.util.List;
@@ -59,6 +63,25 @@ public class ProductService extends BaseService<Product> {
     @Path("/delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response drop(@PathParam("id")Integer id) throws URISyntaxException {
-        return super.dropObject(id);
+        Response r = Response.status(200).entity("Object removed OK.\n").build();
+        Transaction t = dao.openSession().beginTransaction();
+        Product obj = dao.getById(id);
+        if (obj != null) {
+            Integer productId = obj.getId();
+            // also make sure to remove OrderDetails for this order
+            OrderDetailsDao odDao = new OrderDetailsDao(dao.getSession());
+            for (OrderDetails od : odDao.getByProductId(productId)) {
+                odDao.delete(od);
+            }
+            // remove the order
+            dao.delete(obj);
+            t.commit();
+        }
+        else {
+            t.rollback();
+            r = Response.status(400).entity("The object does not exist in DB.\n").build();
+        }
+        dao.closeSession();
+        return r;
     }
 }

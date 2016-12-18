@@ -1,3 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="northwind.rest.app.model">
     <class name="OrderDetails" table="order_details">
         <meta attribute="class-description">
@@ -13,13 +17,13 @@
             </key-many-to-one>
         </composite-id>
 
-        <property name="unitPrice" type="java.lang.Double">
+        <property name="unitPrice" type="java.lang.Float">
             <column name="unitprice" not-null="true" />
         </property>
         <property name="quantity" type="java.lang.Integer">
             <column name="quantity" not-null="true" />
         </property>
-        <property name="discount" type="java.lang.Double">
+        <property name="discount" type="java.lang.Float">
             <column name="discount" not-null="true" />
         </property>
 

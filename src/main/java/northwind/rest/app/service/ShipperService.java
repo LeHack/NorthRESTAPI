@@ -34,7 +34,7 @@ public class ShipperService extends BaseService<Shipper> {
     }
 
     @GET
-    @Path("{id}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Shipper getOne(@PathParam("id")Integer id) {
         return getSingleObject(id);
