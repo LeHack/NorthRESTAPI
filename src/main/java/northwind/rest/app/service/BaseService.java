@@ -5,13 +5,18 @@ import northwind.rest.app.exceptions.SessionNotAvailable;
 import northwind.rest.app.model.Base;
 
 import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 public class BaseService<T> {
     protected BaseDao<T> dao;
@@ -26,6 +31,38 @@ public class BaseService<T> {
         }
         dao.closeSession();
         return list;
+    }
+
+    public List<T> getObjectsByAttribute(String attribute, String value) {
+        List<T> objects = null;
+        dao.openSession();
+        try {
+            Object attrValue = value;
+            Class<?> attrType = dao.getAttributeType(attribute);
+            if (!value.getClass().equals(attrType)) {
+                // attempt to do a simple conversion
+                if (Integer.class.equals( attrType)) {
+                    attrValue = Integer.valueOf(value);
+                }
+                else if (Float.class.equals( attrType )) {
+                    attrValue = Float.valueOf( value );
+                }
+                else if (Date.class.equals( attrType )) {
+                    attrValue = asDate(value);
+                }
+                else {
+                    throw new ClassCastException("Attribute " + attribute + " is not supported in this mode.");
+                }
+            }
+            objects = dao.getByCriteriaAndRestriction( Restrictions.eq(attribute, attrValue) );
+        } catch (SessionNotAvailable e) {
+            objects = Collections.emptyList();
+        } catch (NoSuchMethodException | ClassCastException e) {
+            // Not supported or no such attribute
+            e.printStackTrace();
+        }
+        dao.closeSession();
+        return objects;
     }
 
     public T getSingleObject(@PathParam("id")Integer id) {
@@ -102,4 +139,16 @@ public class BaseService<T> {
 
     // by default skip validation
     protected Response validateNewObject(T obj) { return null; };
+
+    protected final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    protected Date asDate(String dateStr) {
+        Date date = null;
+        try {
+            date = dateFormat.parse(dateStr);
+        } catch (ParseException e1) {
+            e1.printStackTrace();
+        }
+
+        return date;
+    }
 }

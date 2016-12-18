@@ -34,6 +34,13 @@ public class CategoryService extends BaseService<Category> {
     }
 
     @GET
+    @Path("/by/{attr}/{val}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Category> getByAttribute(@PathParam("attr")String attribute, @PathParam("val")String value) {
+        return getObjectsByAttribute(attribute, value);
+    }
+
+    @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Category getOne(@PathParam("id")Integer id) {

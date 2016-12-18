@@ -34,6 +34,13 @@ public class CustomerService extends BaseService<Customer> {
     }
 
     @GET
+    @Path("/by/{attr}/{val}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Customer> getByAttribute(@PathParam("attr")String attribute, @PathParam("val")String value) {
+        return getObjectsByAttribute(attribute, value);
+    }
+
+    @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Customer getOne(@PathParam("id")String id) {

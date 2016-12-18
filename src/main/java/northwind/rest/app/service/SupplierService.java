@@ -34,6 +34,13 @@ public class SupplierService extends BaseService<Supplier> {
     }
 
     @GET
+    @Path("/by/{attr}/{val}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Supplier> getByAttribute(@PathParam("attr")String attribute, @PathParam("val")String value) {
+        return getObjectsByAttribute(attribute, value);
+    }
+
+    @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Supplier getOne(@PathParam("id")Integer id) {

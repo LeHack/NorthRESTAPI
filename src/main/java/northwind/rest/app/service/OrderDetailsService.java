@@ -29,6 +29,13 @@ public class OrderDetailsService extends BaseService<OrderDetails> {
     }
 
     @GET
+    @Path("/by/{attr}/{val}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<OrderDetails> getByAttribute(@PathParam("attr")String attribute, @PathParam("val")String value) {
+        return getObjectsByAttribute(attribute, value);
+    }
+
+    @GET
     @Path("/order/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<OrderDetails> getByOrder(@PathParam("id")Integer id) {

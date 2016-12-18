@@ -98,3 +98,25 @@ curl http://localhost:8080/NorthRESTAPI/rest/order/delete/11078
 ```sh
 curl http://localhost:8080/NorthRESTAPI/rest/order-details/product/35
 ```
+
+## Wyszukiwanie po wybranym parametrze
+- Dostawcy po nazwie firmy
+```sh
+curl http://localhost:8080/NorthRESTAPI/rest/shipper/by/companyName/Speedy%20Express
+```
+- Zamówienia po kraju docelowym
+```sh
+curl http://localhost:8080/NorthRESTAPI/rest/order/by/shipCountry/France
+```
+- Zamówienia po dacie zamówienia
+```sh
+curl http://localhost:8080/NorthRESTAPI/rest/order/by/orderDate/1996-07-04
+```
+- Klienci po mieście
+```sh
+curl http://localhost:8080/NorthRESTAPI/rest/customer/by/city/Warszawa
+```
+- Produkty, które nie są już w sprzedaży
+```sh
+curl http://localhost:8080/NorthRESTAPI/rest/product/by/discontinued/1
+```

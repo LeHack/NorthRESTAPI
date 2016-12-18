@@ -31,9 +31,6 @@ import org.hibernate.Transaction;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -57,6 +54,13 @@ public class OrderService extends BaseService<Order> {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Order> getAll() {
         return getAllObjects();
+    }
+
+    @GET
+    @Path("/by/{attr}/{val}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Order> getByAttribute(@PathParam("attr")String attribute, @PathParam("val")String value) {
+        return getObjectsByAttribute(attribute, value);
     }
 
     @GET
@@ -270,15 +274,5 @@ public class OrderService extends BaseService<Order> {
                 map.put(f, newVal);
             }
         }
-    }
-    
-    private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private Date asDate(String dateStr) {
-        Date date = null;
-        try {
-            date = dateFormat.parse(dateStr);
-        } catch (ParseException e1) {}
-
-        return date;
     }
 }

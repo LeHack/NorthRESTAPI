@@ -8,6 +8,7 @@ import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.SimpleExpression;
 
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -126,5 +127,18 @@ public abstract class BaseDao<T> {
         if (session == null)
             throw new SessionNotAvailable();
         return session;
+    }
+
+    public Class<?> getAttributeType(String attr) throws NoSuchMethodException {
+        Class<?> result = String.class;
+        String ucFirst = attr.substring(0, 1).toUpperCase() + attr.substring(1);
+        Method get;
+        try {
+            get = this.usedClass.getMethod("get" + ucFirst);
+            result = get.getReturnType();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
